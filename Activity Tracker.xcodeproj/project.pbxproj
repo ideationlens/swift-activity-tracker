@@ -55,13 +55,37 @@
 			isa = PBXGroup;
 			children = (
 				5F9CC9DF216198EC00062258 /* AppDelegate.swift */,
-				5F9CC9E1216198EC00062258 /* ViewController.swift */,
-				5F9CC9E3216198EC00062258 /* Main.storyboard */,
+				5F9CC9F321619D2600062258 /* Controller */,
+				5F9CC9F121619D0700062258 /* Model */,
+				5F9CC9F221619D1400062258 /* View */,
 				5F9CC9E6216198EE00062258 /* Assets.xcassets */,
 				5F9CC9E8216198EE00062258 /* LaunchScreen.storyboard */,
 				5F9CC9EB216198EE00062258 /* Info.plist */,
 			);
 			path = "Activity Tracker";
+			sourceTree = "<group>";
+		};
+		5F9CC9F121619D0700062258 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5F9CC9F221619D1400062258 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5F9CC9E3216198EC00062258 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5F9CC9F321619D2600062258 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5F9CC9E1216198EC00062258 /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
