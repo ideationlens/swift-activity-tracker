@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zde-Od-Fqw">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController title="Home" id="BYZ-38-t0r" customClass="HomeViewController" customModule="Activity_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ad-2i-nas" userLabel="Tag Picker View">
+                                <rect key="frame" x="0.0" y="90" width="414" height="60"/>
+                                <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="yoz-eC-pmI"/>
+                                </constraints>
+                            </pickerView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TC2-pB-3qV">
+                                <rect key="frame" x="0.0" y="152" width="414" height="599"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <pickerView opaque="NO" tag="1" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-2b-umP" userLabel="Tag Picker View">
+                                <rect key="frame" x="0.0" y="753" width="414" height="60"/>
+                                <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="yv9-Xu-JXg"/>
+                                </constraints>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0Ad-2i-nas" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6te-mx-PEd"/>
+                            <constraint firstItem="0Ad-2i-nas" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7Bl-U0-56e"/>
+                            <constraint firstItem="0Ad-2i-nas" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="2" id="9C9-Hf-52J"/>
+                            <constraint firstItem="TC2-pB-3qV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FRu-eA-nSv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TC2-pB-3qV" secondAttribute="trailing" id="HQX-eJ-UMj"/>
+                            <constraint firstItem="QPq-2b-umP" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="KrZ-ah-SMP"/>
+                            <constraint firstItem="QPq-2b-umP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LnK-Ad-sBb"/>
+                            <constraint firstItem="TC2-pB-3qV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OEf-0G-JKA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="QPq-2b-umP" secondAttribute="bottom" id="ZmI-i2-lCd"/>
+                            <constraint firstItem="QPq-2b-umP" firstAttribute="top" secondItem="TC2-pB-3qV" secondAttribute="bottom" constant="2" id="bpl-Lc-PLG"/>
+                            <constraint firstItem="TC2-pB-3qV" firstAttribute="top" secondItem="0Ad-2i-nas" secondAttribute="bottom" constant="2" id="dXp-Cg-mwZ"/>
+                            <constraint firstItem="TC2-pB-3qV" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="r2T-c2-M3O"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Home" largeTitleDisplayMode="never" id="r0W-9C-UUk">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="U5M-iQ-pXc">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="FCk-N0-0Gj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="activityTableView" destination="TC2-pB-3qV" id="aON-1n-WhB"/>
+                        <outlet property="reportTypePicker" destination="QPq-2b-umP" id="VgB-qc-H8c"/>
+                        <outlet property="tagPicker" destination="0Ad-2i-nas" id="vTN-MO-sus"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1076" y="133.5832083958021"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="qsu-W0-ZT6">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zde-Od-Fqw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FHo-4S-zUu">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="r2i-ds-UgR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BZd-yn-Mf0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="121" y="134"/>
+        </scene>
+    </scenes>
+</document>
