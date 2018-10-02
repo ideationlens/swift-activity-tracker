@@ -12,6 +12,8 @@ class ActivityCell: UITableViewCell {
 
     // Button on right side
     
+    // Button on left side might not be needed
+    
     // create Name Label
     // tag Label
     

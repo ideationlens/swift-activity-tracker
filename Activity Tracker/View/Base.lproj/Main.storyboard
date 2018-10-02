@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ad-2i-nas" userLabel="Tag Picker View">
-                                <rect key="frame" x="0.0" y="90" width="414" height="60"/>
+                                <rect key="frame" x="100" y="90" width="314" height="60"/>
                                 <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -30,28 +30,55 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <pickerView opaque="NO" tag="1" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-2b-umP" userLabel="Tag Picker View">
-                                <rect key="frame" x="0.0" y="753" width="414" height="60"/>
+                                <rect key="frame" x="100" y="753" width="314" height="60"/>
                                 <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="yv9-Xu-JXg"/>
                                 </constraints>
                             </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reporting: " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdc-a1-FSZ">
+                                <rect key="frame" x="0.0" y="753" width="100" height="60"/>
+                                <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="7ES-kb-QTt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Displaying: " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2kj-qH-Qxj">
+                                <rect key="frame" x="0.0" y="90" width="100" height="60"/>
+                                <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Mn4-bI-bMB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="0Ad-2i-nas" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6te-mx-PEd"/>
                             <constraint firstItem="0Ad-2i-nas" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7Bl-U0-56e"/>
                             <constraint firstItem="0Ad-2i-nas" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="2" id="9C9-Hf-52J"/>
+                            <constraint firstItem="Pdc-a1-FSZ" firstAttribute="top" secondItem="TC2-pB-3qV" secondAttribute="bottom" constant="2" id="ByB-lL-TcH"/>
                             <constraint firstItem="TC2-pB-3qV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FRu-eA-nSv"/>
+                            <constraint firstItem="2kj-qH-Qxj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GiX-A1-7ry"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TC2-pB-3qV" secondAttribute="trailing" id="HQX-eJ-UMj"/>
                             <constraint firstItem="QPq-2b-umP" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="KrZ-ah-SMP"/>
-                            <constraint firstItem="QPq-2b-umP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LnK-Ad-sBb"/>
+                            <constraint firstItem="TC2-pB-3qV" firstAttribute="top" secondItem="2kj-qH-Qxj" secondAttribute="bottom" constant="2" id="LWX-c9-Dbo"/>
+                            <constraint firstItem="QPq-2b-umP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="LnK-Ad-sBb"/>
+                            <constraint firstItem="Pdc-a1-FSZ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="NGq-dj-2H2"/>
                             <constraint firstItem="TC2-pB-3qV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OEf-0G-JKA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="QPq-2b-umP" secondAttribute="bottom" id="ZmI-i2-lCd"/>
                             <constraint firstItem="QPq-2b-umP" firstAttribute="top" secondItem="TC2-pB-3qV" secondAttribute="bottom" constant="2" id="bpl-Lc-PLG"/>
                             <constraint firstItem="TC2-pB-3qV" firstAttribute="top" secondItem="0Ad-2i-nas" secondAttribute="bottom" constant="2" id="dXp-Cg-mwZ"/>
+                            <constraint firstItem="Pdc-a1-FSZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ivG-bR-9H5"/>
+                            <constraint firstItem="2kj-qH-Qxj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="2" id="lR8-xH-djp"/>
+                            <constraint firstItem="QPq-2b-umP" firstAttribute="leading" secondItem="Pdc-a1-FSZ" secondAttribute="trailing" id="o0i-cJ-w3U"/>
                             <constraint firstItem="TC2-pB-3qV" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="r2T-c2-M3O"/>
+                            <constraint firstItem="0Ad-2i-nas" firstAttribute="leading" secondItem="2kj-qH-Qxj" secondAttribute="trailing" id="r5d-Av-VGd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -73,7 +100,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1076" y="133.5832083958021"/>
+            <point key="canvasLocation" x="1075.3623188405797" y="133.25892857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qsu-W0-ZT6">

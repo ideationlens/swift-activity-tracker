@@ -233,13 +233,8 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
                 pickerLabel.attributedText = NSAttributedString(string: tagArray[row], attributes: fontAttributes)
                 pickerLabel.textAlignment = .center
             } else {
-                if component == 0 {
-                    pickerLabel.attributedText = NSAttributedString(string: "Report Type:  ", attributes: fontAttributes)
-                    pickerLabel.textAlignment = .right
-                } else {
-                    pickerLabel.attributedText = NSAttributedString(string: "  " + reportTypeArray[row], attributes: fontAttributes)
-                    pickerLabel.textAlignment = .left
-                }
+                pickerLabel.attributedText = NSAttributedString(string: "  " + reportTypeArray[row], attributes: fontAttributes)
+                pickerLabel.textAlignment = .left
             }
         
             // remove the selection indication lines from the picker view
@@ -251,22 +246,14 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if pickerView.tag == tagPicker.tag {
-            return 1
-        } else {
-            return 2
-        }
+        return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == tagPicker.tag {
             return tagArray.count
         } else {
-            if component == 0 {
-                return 1
-            } else {
-                return reportTypeArray.count
-            }
+            return reportTypeArray.count
         }
     }
     
@@ -276,16 +263,16 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     // Set Column Width by PickerView and Component
-    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        if pickerView.tag == reportTypePicker.tag {
-            if component == 0 {
-                return self.view.frame.width / 3
-            } else {
-                return self.view.frame.width / 3 * 2
-            }
-        } else {
-            return self.view.frame.width
-        }
-    }
+//    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+//        if pickerView.tag == reportTypePicker.tag {
+//            if component == 0 {
+//                return self.view.frame.width / 3
+//            } else {
+//                return self.view.frame.width / 3 * 2
+//            }
+//        } else {
+//            return self.view.frame.width
+//        }
+//    }
 }
 

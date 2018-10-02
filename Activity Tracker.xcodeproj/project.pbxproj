@@ -13,6 +13,13 @@
 		5F9CC9E7216198EE00062258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F9CC9E6216198EE00062258 /* Assets.xcassets */; };
 		5F9CC9EA216198EE00062258 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F9CC9E8216198EE00062258 /* LaunchScreen.storyboard */; };
 		5F9CC9F7216306F500062258 /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9F6216306F500062258 /* ActivityCell.swift */; };
+		5F9CC9F92163BAD800062258 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9F82163BAD800062258 /* Activity.swift */; };
+		5F9CC9FB2163D11800062258 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9FA2163D11800062258 /* Entry.swift */; };
+		5F9CC9FD2163D20C00062258 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9FC2163D20C00062258 /* User.swift */; };
+		5F9CC9FF2163D2C200062258 /* EntryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9FE2163D2C200062258 /* EntryType.swift */; };
+		5F9CCA012163D3CB00062258 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CCA002163D3CB00062258 /* ReportType.swift */; };
+		5F9CCA032163D46400062258 /* RecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CCA022163D46400062258 /* RecurrenceType.swift */; };
+		5F9CCA052163D4BC00062258 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CCA042163D4BC00062258 /* Tag.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +31,13 @@
 		5F9CC9E9216198EE00062258 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F9CC9EB216198EE00062258 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F9CC9F6216306F500062258 /* ActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
+		5F9CC9F82163BAD800062258 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		5F9CC9FA2163D11800062258 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		5F9CC9FC2163D20C00062258 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5F9CC9FE2163D2C200062258 /* EntryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryType.swift; sourceTree = "<group>"; };
+		5F9CCA002163D3CB00062258 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
+		5F9CCA022163D46400062258 /* RecurrenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceType.swift; sourceTree = "<group>"; };
+		5F9CCA042163D4BC00062258 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +83,13 @@
 		5F9CC9F121619D0700062258 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5F9CC9F82163BAD800062258 /* Activity.swift */,
+				5F9CC9FA2163D11800062258 /* Entry.swift */,
+				5F9CC9FE2163D2C200062258 /* EntryType.swift */,
+				5F9CCA022163D46400062258 /* RecurrenceType.swift */,
+				5F9CCA042163D4BC00062258 /* Tag.swift */,
+				5F9CCA002163D3CB00062258 /* ReportType.swift */,
+				5F9CC9FC2163D20C00062258 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -162,8 +183,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F9CC9FB2163D11800062258 /* Entry.swift in Sources */,
+				5F9CCA012163D3CB00062258 /* ReportType.swift in Sources */,
+				5F9CCA052163D4BC00062258 /* Tag.swift in Sources */,
 				5F9CC9E2216198EC00062258 /* HomeViewController.swift in Sources */,
+				5F9CC9FF2163D2C200062258 /* EntryType.swift in Sources */,
+				5F9CCA032163D46400062258 /* RecurrenceType.swift in Sources */,
+				5F9CC9FD2163D20C00062258 /* User.swift in Sources */,
 				5F9CC9F7216306F500062258 /* ActivityCell.swift in Sources */,
+				5F9CC9F92163BAD800062258 /* Activity.swift in Sources */,
 				5F9CC9E0216198EC00062258 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
