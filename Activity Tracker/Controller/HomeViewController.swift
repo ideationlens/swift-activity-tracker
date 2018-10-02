@@ -10,17 +10,30 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    // Tag Picker
     @IBOutlet weak var tagPicker: UIPickerView!
-    let tagArray = ["Morning","Exercise","Groceries","All Activities"]
+    var tagArray: [String]!
     
+    // Report Type Picker
     @IBOutlet weak var reportTypePicker: UIPickerView!
-    let reportTypeArray = ["Default","Count","Change","Streak","Days Passed"]
+    var reportTypeArray: [String]!
     
+    // Table View
     @IBOutlet weak var activityTableView: UITableView!
-    let activityArray = ["Exercise","Eat veggies","Learn something new","Go to bed"]
+    var activityArray: [String]!
+    var archiveArray: [String]!
+    var isShowingArchived: Bool = false
     
     override func loadView() {
         super.loadView()
+        
+        // refresh all model arrays
+        loadTagArray()
+        loadReportTypeArray()
+        //loadActivityEntryArray()
+        //loadArchiveEntryArray()
+        loadActivityArray()
+        loadArchiveArray()
         
         // Setup UIPickerViews
         tagPicker.delegate = self
@@ -39,11 +52,19 @@ class HomeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         
+        // continue tableview setup
         if let indexPath = activityTableView.indexPathForSelectedRow {
             activityTableView.deselectRow(at: indexPath, animated: true)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // continue pickerview setup
+        tagPicker.selectRow(tagArray.count - 1, inComponent: 0, animated: true)
     }
 
     @IBAction func addButtonPressed(_ sender: Any) {
@@ -52,25 +73,43 @@ class HomeViewController: UIViewController {
     
     // MARK: - MODEL METHODS
     
-    // MARK: LABEL METHODS
+    // MARK: TAG METHODS
     
-    // insert func to refresh labelArray
+    func loadTagArray() {
+        tagArray = ["Morning","Exercise","Groceries","All Activities"]
+    }
+    
+    // MARK: REPORT TYPE METHODS
+    
+    func loadReportTypeArray() {
+        reportTypeArray = ["Default","Count","Change","Streak","Days Passed"]
+    }
     
     // MARK: ENTRY METHODS
     
+    // Activity Entry
     // insert func to create a new Entry
     
+    // Archive Entry
     // insert func to refresh entryArray
     
     // MARK: ACTIVITY METHODS
     
-    // insert func to refresh activityArray
+    // Activity
+    func loadActivityArray() {
+        activityArray = ["Exercise","Eat veggies","Learn something new","Go to bed"]
+    }
     
-    // insert func to refresh archivedArray
+    // insert func to sort activityArray
+    
+    // Archive
+    func loadArchiveArray() {
+        archiveArray  = ["Project 20,000 Pushups", "Smoke a Cigarettes Today?"]
+    }
     
     // insert func to get report labels for a given activity
     
-    // insert func to
+    // insert func to get tags for a give activity
     
     // MARK: - NAVIGATION METHODS
     
@@ -85,23 +124,80 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
+    // Cell Selected
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            isShowingArchived = !isShowingArchived
+            activityTableView.reloadData()
+        }
+    }
+    
+    // Populate TableView Cells
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        if indexPath.section == 0 {
+            cell.textLabel?.attributedText =  makeAttributedString(title: activityArray[indexPath.row], subtitle: "insert Report labels here")
+            //cell.translatesAutoresizingMaskIntoConstraints = false
+            cell.heightAnchor.constraint(equalToConstant: 100)
+            cell.accessoryType = .none
+        } else {
+            cell.alpha = 0.5
+            if isShowingArchived {
+                cell.textLabel?.attributedText =  makeAttributedString(title: archiveArray[indexPath.row], subtitle: "insert Report labels here")
+                cell.accessoryType = .checkmark
+                cell.heightAnchor.constraint(equalToConstant: 60)
+            } else {
+                cell.textLabel?.attributedText =  makeAttributedString(title: "Archived Activities", subtitle: "")
+                cell.accessoryType = .detailDisclosureButton
+                cell.heightAnchor.constraint(equalToConstant: 25)
+                
+            }
+        }
+        
+        cell.textLabel?.numberOfLines = 0
+        return cell
+    }
+    
+    // Title of Section
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return isShowingArchived ? "Archived" : " "
+        } else {
+            return nil
+        }
+    }
+    
+    // Number of Sections
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
+    // Number of rows in a given section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return activityArray.count
         } else {
-            return 1
+            return isShowingArchived ? archiveArray.count : 1
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+    
+    
+    // Text formatting method used to populate TableView Cells
+    func makeAttributedString(title: String, subtitle: String) -> NSAttributedString {
+        let titleAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline), NSAttributedString.Key.foregroundColor: UIColor.black]
+        let subtitleAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)]
+        
+        let titleString = NSMutableAttributedString(string: "\(title)", attributes: titleAttributes)
+        
+        if subtitle.count > 0 {
+            let subtitleString = NSAttributedString(string: "\n\(subtitle)", attributes: subtitleAttributes)
+            titleString.append(subtitleString)
+        }
+        
+        return titleString
     }
-    
-    
 }
 
 // MARK: - PICKERVIEW METHODS
@@ -125,12 +221,10 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         if let currentLabel = view as? UILabel {
             pickerLabel = currentLabel
         } else {
-            // Color code the picker view options
+            // Color code the non-default picker view options
             let hue = CGFloat(row)/CGFloat(tagArray.count)
             var fontColor = UIColor.black
-            // Main
-            if (pickerView.tag == tagPicker.tag && row != tagArray.count - 1)
-                || (pickerView.tag == reportTypePicker.tag && row == 0) {
+            if (pickerView.tag == tagPicker.tag && row != tagArray.count - 1) {
                 fontColor = UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0)
             }
             let fontAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline), NSAttributedString.Key.foregroundColor: fontColor]
