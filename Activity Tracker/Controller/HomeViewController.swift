@@ -12,16 +12,16 @@ class HomeViewController: UIViewController {
 
     // Tag Picker
     @IBOutlet weak var tagPicker: UIPickerView!
-    var tagArray: [String]!
+    var tagPickerData: [String]!
     
     // Report Type Picker
     @IBOutlet weak var reportTypePicker: UIPickerView!
-    var reportTypeArray: [String]!
+    var reportTypePickerData: [String]!
     
     // Table View
     @IBOutlet weak var activityTableView: UITableView!
-    var activityArray: [String]!
-    var archiveArray: [String]!
+    var activityArray: [ActivityCell]!
+    var archiveArray: [ActivityCell]!
     var isShowingArchived: Bool = false
     
     override func loadView() {
@@ -47,7 +47,12 @@ class HomeViewController: UIViewController {
         // Setup TableView
         activityTableView.delegate = self
         activityTableView.dataSource = self
+        activityTableView.register(ActivityCell.self, forCellReuseIdentifier: "ActivityCell")
         activityTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        activityTableView.separatorStyle = .singleLine
+        activityTableView.rowHeight = 75
+//        activityTableView.autoresizingMask = .flexibleHeight
+//        activityTableView.estimatedRowHeight = 120
 
     }
     
@@ -64,7 +69,7 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // continue pickerview setup
-        tagPicker.selectRow(tagArray.count - 1, inComponent: 0, animated: true)
+        tagPicker.selectRow(tagPickerData.count - 1, inComponent: 0, animated: true)
     }
 
     @IBAction func addButtonPressed(_ sender: Any) {
@@ -76,13 +81,13 @@ class HomeViewController: UIViewController {
     // MARK: TAG METHODS
     
     func loadTagArray() {
-        tagArray = ["Morning","Exercise","Groceries","All Activities"]
+        tagPickerData = ["Morning","Exercise","Nutrition","All Activities"]
     }
     
     // MARK: REPORT TYPE METHODS
     
     func loadReportTypeArray() {
-        reportTypeArray = ["Default","Count","Change","Streak","Days Passed"]
+        reportTypePickerData = ["Default","Count","Change","Streak","Days Passed"]
     }
     
     // MARK: ENTRY METHODS
@@ -97,14 +102,97 @@ class HomeViewController: UIViewController {
     
     // Activity
     func loadActivityArray() {
-        activityArray = ["Exercise","Eat veggies","Learn something new","Go to bed"]
+        let tag1 = Tag(name: "Daily")
+        let tag2 = Tag(name: "Exercise")
+        let tag3 = Tag(name: "Nutrition")
+        var cell = ActivityCell()
+        activityArray = [ActivityCell]()
+        
+        cell.activityName = "Go to gym"
+        cell.tags = [tag1,tag2]
+        cell.report0 = "Today: 0"
+        cell.report1 = "This Week: 2"
+        cell.report2 = "This month: 10"
+        cell.entryType = .checkbox
+        cell.actionButton.tag = 0
+        activityArray.append(cell)
+        
+        cell = ActivityCell()
+        cell.activityName = "Eat Veggies"
+        cell.tags = [tag1,tag3]
+        cell.report0 = "Today: 0"
+        cell.report1 = "This Week: 2"
+        cell.report2 = "This month: 10"
+        cell.entryType = .keypad
+        cell.actionButton.tag = 1
+        activityArray.append(cell)
+
+        cell = ActivityCell()
+        cell.activityName = "Work and eat at the farm"
+        cell.tags = [tag2, tag3]
+        cell.report0 = "Today: 0"
+        cell.report1 = "This Week: 2"
+        cell.report2 = "This month: 10"
+        cell.entryType = .plusOneCounter
+        cell.actionButton.tag = 2
+        activityArray.append(cell)
+        
+        cell = ActivityCell()
+        cell.activityName = "Learn something new"
+        cell.tags = [tag1]
+        cell.report0 = "Today: 1"
+        cell.report1 = "This Week: 6"
+        cell.report2 = "This month: 25"
+        cell.entryType = .yesNo
+        cell.actionButton.tag = 3
+        activityArray.append(cell)
+        
+        cell = ActivityCell()
+        cell.activityName = "Beers consumed"
+        cell.tags = []
+        cell.report0 = "Current streak: 10 days"
+        cell.report1 = "Average: 20 days"
+        cell.report2 = "Best Streak: 35 days"
+        cell.entryType = .plusOneCounter
+        cell.actionButton.tag = 4
+        activityArray.append(cell)
     }
     
     // insert func to sort activityArray
     
     // Archive
     func loadArchiveArray() {
-        archiveArray  = ["Project 20,000 Pushups", "Smoke a Cigarettes Today?"]
+        let tag1 = Tag(name: "Daily")
+        let tag2 = Tag(name: "Exercise")
+        let tag3 = Tag(name: "Nutrition")
+        var cell = ActivityCell()
+        archiveArray = [ActivityCell]()
+        
+        cell.activityName = "Project 20,000 Pushups"
+        cell.tags = [tag2]
+        cell.report0 = "Today: 0"
+        cell.report1 = "This Week: 2"
+        cell.report2 = "This month: 10"
+        cell.entryType = .keypad
+        archiveArray.append(cell)
+        
+        cell = ActivityCell()
+        cell.activityName = "Avoid Cigarettes"
+        cell.tags = [tag1]
+        cell.report0 = "Today: 0"
+        cell.report1 = "This Week: 2"
+        cell.report2 = "This month: 10"
+        cell.entryType = .yesNo
+        archiveArray.append(cell)
+        
+        cell = ActivityCell()
+        cell.activityName = "Avoid Candy"
+        cell.tags = [tag1, tag3]
+        cell.report0 = "Today: 0"
+        cell.report1 = "This Week: 2"
+        cell.report2 = "This month: 10"
+        cell.entryType = .yesNo
+        archiveArray.append(cell)
     }
     
     // insert func to get report labels for a given activity
@@ -132,30 +220,30 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // Initiate the creation of a new Entry
+    @objc func createEntry(sender: UIButton) {
+        if let activity = activityArray[sender.tag].activityName {
+            print("creating entry for \(activity)!")
+        }
+    }
+    
     // Populate TableView Cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        var cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         
         if indexPath.section == 0 {
-            cell.textLabel?.attributedText =  makeAttributedString(title: activityArray[indexPath.row], subtitle: "insert Report labels here")
-            //cell.translatesAutoresizingMaskIntoConstraints = false
-            cell.heightAnchor.constraint(equalToConstant: 100)
-            cell.accessoryType = .none
+            cell = activityArray[indexPath.row]
         } else {
-            cell.alpha = 0.5
             if isShowingArchived {
-                cell.textLabel?.attributedText =  makeAttributedString(title: archiveArray[indexPath.row], subtitle: "insert Report labels here")
-                cell.accessoryType = .checkmark
-                cell.heightAnchor.constraint(equalToConstant: 60)
+                cell = archiveArray[indexPath.row]
             } else {
-                cell.textLabel?.attributedText =  makeAttributedString(title: "Archived Activities", subtitle: "")
-                cell.accessoryType = .detailDisclosureButton
-                cell.heightAnchor.constraint(equalToConstant: 25)
-                
+                let placeholderCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+                placeholderCell.textLabel?.attributedText = NSAttributedString(string: "show archived activities", attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)])
+                return placeholderCell
             }
         }
         
-        cell.textLabel?.numberOfLines = 0
+        cell.layoutSubviews()
         return cell
     }
     
@@ -181,23 +269,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return isShowingArchived ? archiveArray.count : 1
         }
     }
-    
-    
-    
-    // Text formatting method used to populate TableView Cells
-    func makeAttributedString(title: String, subtitle: String) -> NSAttributedString {
-        let titleAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline), NSAttributedString.Key.foregroundColor: UIColor.black]
-        let subtitleAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)]
-        
-        let titleString = NSMutableAttributedString(string: "\(title)", attributes: titleAttributes)
-        
-        if subtitle.count > 0 {
-            let subtitleString = NSAttributedString(string: "\n\(subtitle)", attributes: subtitleAttributes)
-            titleString.append(subtitleString)
-        }
-        
-        return titleString
-    }
 }
 
 // MARK: - PICKERVIEW METHODS
@@ -207,9 +278,9 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     // Method to get user selection
     func pickerView(_ picker: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if picker.tag == tagPicker.tag {
-            print(tagArray[row])
+            print(tagPickerData[row])
         } else {
-            print(reportTypeArray[row])
+            print(reportTypePickerData[row])
         }
     }
     
@@ -222,19 +293,17 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             pickerLabel = currentLabel
         } else {
             // Color code the non-default picker view options
-            let hue = CGFloat(row)/CGFloat(tagArray.count)
+            let hue = CGFloat(row)/CGFloat(tagPickerData.count)
             var fontColor = UIColor.black
-            if (pickerView.tag == tagPicker.tag && row != tagArray.count - 1) {
+            if (pickerView.tag == tagPicker.tag && row != tagPickerData.count - 1) {
                 fontColor = UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0)
             }
             let fontAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline), NSAttributedString.Key.foregroundColor: fontColor]
-            
+            pickerLabel.textAlignment = .left
             if pickerView.tag == tagPicker.tag {
-                pickerLabel.attributedText = NSAttributedString(string: tagArray[row], attributes: fontAttributes)
-                pickerLabel.textAlignment = .center
+                pickerLabel.attributedText = NSAttributedString(string: "  " + tagPickerData[row], attributes: fontAttributes)
             } else {
-                pickerLabel.attributedText = NSAttributedString(string: "  " + reportTypeArray[row], attributes: fontAttributes)
-                pickerLabel.textAlignment = .left
+                pickerLabel.attributedText = NSAttributedString(string: "  " + reportTypePickerData[row], attributes: fontAttributes)
             }
         
             // remove the selection indication lines from the picker view
@@ -251,9 +320,9 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == tagPicker.tag {
-            return tagArray.count
+            return tagPickerData.count
         } else {
-            return reportTypeArray.count
+            return reportTypePickerData.count
         }
     }
     
