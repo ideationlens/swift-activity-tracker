@@ -52,7 +52,7 @@ class ActivityCell: UITableViewCell {
         tagLabel.tag = 3
         tagLabel.translatesAutoresizingMaskIntoConstraints = false
         tagLabel.heightAnchor.constraint(equalToConstant: 53).isActive = true
-        tagLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
+        tagLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption1)
         tagLabel.adjustsFontForContentSizeCategory = true
         tagLabel.numberOfLines = 2
         tagLabel.adjustsFontForContentSizeCategory = true
@@ -76,7 +76,7 @@ class ActivityCell: UITableViewCell {
         let report0Label = UILabel()
         report0Label.tag = 0
         report0Label.translatesAutoresizingMaskIntoConstraints = false
-        report0Label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
+        report0Label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption2)
         report0Label.adjustsFontForContentSizeCategory = true
         report0Label.adjustsFontSizeToFitWidth = true
         report0Label.numberOfLines = 0
@@ -90,7 +90,7 @@ class ActivityCell: UITableViewCell {
         let report1Label = UILabel()
         report1Label.tag = 1
         report1Label.translatesAutoresizingMaskIntoConstraints = false
-        report1Label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
+        report1Label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption2)
         report1Label.adjustsFontForContentSizeCategory = true
         report1Label.adjustsFontSizeToFitWidth = true
         report1Label.numberOfLines = 1
@@ -104,7 +104,7 @@ class ActivityCell: UITableViewCell {
         let report2Label = UILabel()
         report2Label.tag = 2
         report2Label.translatesAutoresizingMaskIntoConstraints = false
-        report2Label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
+        report2Label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption2)
         report2Label.adjustsFontForContentSizeCategory = true
         report2Label.adjustsFontSizeToFitWidth = true
         report2Label.numberOfLines = 1
@@ -141,9 +141,9 @@ class ActivityCell: UITableViewCell {
 
         // Report View
         self.addSubview(reportView)
-        reportView.topAnchor.constraint(equalTo: self.topAnchor, constant: 2).isActive = true
+        reportView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5).isActive = true
         reportView.rightAnchor.constraint(equalTo: actionButton.leftAnchor, constant: -2).isActive = true
-        reportView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -2).isActive = true
+        reportView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4).isActive = true
         reportView.widthAnchor.constraint(equalToConstant: self.frame.width / 2.5).isActive = true
         reportView.addArrangedSubview(report0Label)
         reportView.addArrangedSubview(report1Label)
@@ -151,10 +151,10 @@ class ActivityCell: UITableViewCell {
         
         // Name and Tag
         self.addSubview(nameAndTagView)
-        nameAndTagView.topAnchor.constraint(equalTo: self.topAnchor, constant: 2).isActive = true
-        nameAndTagView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 2).isActive = true
-        nameAndTagView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -2).isActive = true
-        nameAndTagView.rightAnchor.constraint(equalTo: reportView.leftAnchor, constant: -2).isActive = true
+        nameAndTagView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5).isActive = true
+        nameAndTagView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 4).isActive = true
+        nameAndTagView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4).isActive = true
+        nameAndTagView.rightAnchor.constraint(equalTo: reportView.leftAnchor, constant: -0).isActive = true
         nameAndTagView.addArrangedSubview(nameLabel)
         nameAndTagView.addArrangedSubview(tagLabel)
     }

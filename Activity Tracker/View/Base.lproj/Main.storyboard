@@ -18,40 +18,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ad-2i-nas" userLabel="Tag Picker View">
-                                <rect key="frame" x="100" y="90" width="314" height="60"/>
+                                <rect key="frame" x="110" y="90" width="304" height="55"/>
                                 <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="yoz-eC-pmI"/>
+                                    <constraint firstAttribute="height" constant="55" id="yoz-eC-pmI"/>
                                 </constraints>
                             </pickerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TC2-pB-3qV">
-                                <rect key="frame" x="0.0" y="152" width="414" height="599"/>
+                                <rect key="frame" x="0.0" y="147" width="414" height="609"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <pickerView opaque="NO" tag="1" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-2b-umP" userLabel="Tag Picker View">
-                                <rect key="frame" x="100" y="753" width="314" height="60"/>
+                                <rect key="frame" x="110" y="758" width="304" height="55"/>
                                 <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="yv9-Xu-JXg"/>
+                                    <constraint firstAttribute="height" constant="55" id="yv9-Xu-JXg"/>
                                 </constraints>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reporting: " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdc-a1-FSZ">
-                                <rect key="frame" x="0.0" y="753" width="100" height="60"/>
+                                <rect key="frame" x="0.0" y="758" width="110" height="55"/>
                                 <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="7ES-kb-QTt"/>
+                                    <constraint firstAttribute="width" constant="110" id="7ES-kb-QTt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Displaying: " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2kj-qH-Qxj">
-                                <rect key="frame" x="0.0" y="90" width="100" height="60"/>
+                                <rect key="frame" x="0.0" y="90" width="110" height="55"/>
                                 <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="Mn4-bI-bMB"/>
+                                    <constraint firstAttribute="width" constant="110" id="Mn4-bI-bMB"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
@@ -68,7 +68,6 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TC2-pB-3qV" secondAttribute="trailing" id="HQX-eJ-UMj"/>
                             <constraint firstItem="QPq-2b-umP" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="KrZ-ah-SMP"/>
                             <constraint firstItem="TC2-pB-3qV" firstAttribute="top" secondItem="2kj-qH-Qxj" secondAttribute="bottom" constant="2" id="LWX-c9-Dbo"/>
-                            <constraint firstItem="QPq-2b-umP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="LnK-Ad-sBb"/>
                             <constraint firstItem="Pdc-a1-FSZ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="NGq-dj-2H2"/>
                             <constraint firstItem="TC2-pB-3qV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OEf-0G-JKA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="QPq-2b-umP" secondAttribute="bottom" id="ZmI-i2-lCd"/>
@@ -84,7 +83,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Home" largeTitleDisplayMode="never" id="r0W-9C-UUk">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="U5M-iQ-pXc">
+                        <barButtonItem key="rightBarButtonItem" springLoaded="YES" systemItem="add" id="U5M-iQ-pXc">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="FCk-N0-0Gj"/>

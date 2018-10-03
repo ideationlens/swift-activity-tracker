@@ -110,51 +110,51 @@ class HomeViewController: UIViewController {
         
         cell.activityName = "Go to gym"
         cell.tags = [tag1,tag2]
-        cell.report0 = "Today: 0"
-        cell.report1 = "This Week: 2"
-        cell.report2 = "This month: 10"
+        cell.report0 = "Streak: 1          "
+        cell.report1 = "     Avg: 2/week"
+        cell.report2 = "   Best: 6          "
         cell.entryType = .checkbox
         cell.actionButton.tag = 0
         activityArray.append(cell)
         
         cell = ActivityCell()
-        cell.activityName = "Eat Veggies"
+        cell.activityName = "Floss teeth"
         cell.tags = [tag1,tag3]
-        cell.report0 = "Today: 0"
-        cell.report1 = "This Week: 2"
-        cell.report2 = "This month: 10"
-        cell.entryType = .keypad
+        cell.report0 = "Streak: 4"
+        cell.report1 = "Avg: 3 days"
+        cell.report2 = "Best: 6"
+        cell.entryType = .checkbox
         cell.actionButton.tag = 1
         activityArray.append(cell)
 
         cell = ActivityCell()
-        cell.activityName = "Work and eat at the farm"
+        cell.activityName = "Eat veggies"
         cell.tags = [tag2, tag3]
-        cell.report0 = "Today: 0"
-        cell.report1 = "This Week: 2"
-        cell.report2 = "This month: 10"
+        cell.report0 = "Count: 0"
+        cell.report1 = "Avg: 2/day"
+        cell.report2 = "Best: 6"
         cell.entryType = .plusOneCounter
         cell.actionButton.tag = 2
         activityArray.append(cell)
         
         cell = ActivityCell()
-        cell.activityName = "Learn something new"
-        cell.tags = [tag1]
-        cell.report0 = "Today: 1"
-        cell.report1 = "This Week: 6"
-        cell.report2 = "This month: 25"
-        cell.entryType = .yesNo
-        cell.actionButton.tag = 3
+        cell.activityName = "Beers counter"
+        cell.tags = []
+        cell.report0 = "Today: 10"
+        cell.report1 = "Week: 20"
+        cell.report2 = "Avg: 2/day"
+        cell.entryType = .plusOneCounter
+        cell.actionButton.tag = 4
         activityArray.append(cell)
         
         cell = ActivityCell()
-        cell.activityName = "Beers consumed"
-        cell.tags = []
-        cell.report0 = "Current streak: 10 days"
-        cell.report1 = "Average: 20 days"
-        cell.report2 = "Best Streak: 35 days"
-        cell.entryType = .plusOneCounter
-        cell.actionButton.tag = 4
+        cell.activityName = "Read"
+        cell.tags = [tag1]
+        cell.report0 = "Streak: 1"
+        cell.report1 = "Avg: 2"
+        cell.report2 = "Best: 4"
+        cell.entryType = .yesNo
+        cell.actionButton.tag = 3
         activityArray.append(cell)
     }
     
@@ -164,33 +164,23 @@ class HomeViewController: UIViewController {
     func loadArchiveArray() {
         let tag1 = Tag(name: "Daily")
         let tag2 = Tag(name: "Exercise")
-        let tag3 = Tag(name: "Nutrition")
         var cell = ActivityCell()
         archiveArray = [ActivityCell]()
         
-        cell.activityName = "Project 20,000 Pushups"
+        cell.activityName = "Do 20,000 Pushups"
         cell.tags = [tag2]
-        cell.report0 = "Today: 0"
-        cell.report1 = "This Week: 2"
-        cell.report2 = "This month: 10"
+        cell.report0 = "Days: 245"
+        cell.report1 = "Avg: 82/day"
+        cell.report2 = "Total: 20,000"
         cell.entryType = .keypad
         archiveArray.append(cell)
         
         cell = ActivityCell()
         cell.activityName = "Avoid Cigarettes"
         cell.tags = [tag1]
-        cell.report0 = "Today: 0"
-        cell.report1 = "This Week: 2"
-        cell.report2 = "This month: 10"
-        cell.entryType = .yesNo
-        archiveArray.append(cell)
-        
-        cell = ActivityCell()
-        cell.activityName = "Avoid Candy"
-        cell.tags = [tag1, tag3]
-        cell.report0 = "Today: 0"
-        cell.report1 = "This Week: 2"
-        cell.report2 = "This month: 10"
+        cell.report0 = "Streak: 30"
+        cell.report1 = "Yes: 70"
+        cell.report2 = "Days: 300"
         cell.entryType = .yesNo
         archiveArray.append(cell)
     }
@@ -298,7 +288,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             if (pickerView.tag == tagPicker.tag && row != tagPickerData.count - 1) {
                 fontColor = UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0)
             }
-            let fontAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline), NSAttributedString.Key.foregroundColor: fontColor]
+            let fontAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline), NSAttributedString.Key.foregroundColor: fontColor]
             pickerLabel.textAlignment = .left
             if pickerView.tag == tagPicker.tag {
                 pickerLabel.attributedText = NSAttributedString(string: "  " + tagPickerData[row], attributes: fontAttributes)
@@ -328,7 +318,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     // Set Row Height of Pickers
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 26
+        return 27
     }
     
     // Set Column Width by PickerView and Component
