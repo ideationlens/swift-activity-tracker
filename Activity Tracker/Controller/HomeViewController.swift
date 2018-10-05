@@ -35,6 +35,9 @@ class HomeViewController: UIViewController {
         loadActivityArray()
         loadArchiveArray()
         
+        // Setup navigation bar
+        navigationItem.leftBarButtonItem = editButtonItem
+        
         // Setup UIPickerViews
         tagPicker.delegate = self
         tagPicker.dataSource = self
