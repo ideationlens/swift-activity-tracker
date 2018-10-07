@@ -12,6 +12,7 @@ import UIKit
 class ActivityCell: UITableViewCell {
     
     //MARK: PROPERTIES
+    
     var activityName: String? {
         get {
             return nameLabel.text

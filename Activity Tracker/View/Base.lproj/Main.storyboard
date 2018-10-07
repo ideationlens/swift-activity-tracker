@@ -87,7 +87,7 @@
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="FCk-N0-0Gj"/>
-                                <segue destination="6Wu-3A-d6j" kind="show" id="ETX-OL-DKH"/>
+                                <segue destination="6Wu-3A-d6j" kind="show" identifier="addActivity" id="ETX-OL-DKH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -102,10 +102,10 @@
             </objects>
             <point key="canvasLocation" x="1075.3623188405797" y="133.25892857142856"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Edit Activity Table View Controller-->
         <scene sceneID="Ubc-qa-tAP">
             <objects>
-                <tableViewController id="6Wu-3A-d6j" sceneMemberID="viewController">
+                <tableViewController id="6Wu-3A-d6j" customClass="EditActivityTableViewController" customModule="Activity_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="9ZO-Na-ewM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

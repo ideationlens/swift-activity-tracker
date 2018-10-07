@@ -42,6 +42,8 @@ class HomeViewController: UIViewController {
         
         // Setup navigation bar
         navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.black
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
         
         // Setup UIPickerViews
         tagPicker.delegate = self
@@ -80,6 +82,17 @@ class HomeViewController: UIViewController {
 
     @IBAction func addButtonPressed(_ sender: Any) {
         print("Creating new activity tracker")
+    }
+    
+    // MARK: NAVIGATION METHODS
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // change back button to say cancel when navigating to EditActivityTableviewController
+        if segue.identifier == "addActivity" {
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+            navigationItem.backBarButtonItem?.tintColor = UIColor.black
+        }
+        
     }
     
     // MARK: - MODEL METHODS
@@ -255,6 +268,18 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             return isShowingArchived ? archivedActivities?.count ?? 0 : 1
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 {
+            if isShowingArchived {
+                return 60
+            } else {
+                return 30
+            }
+        }
+        
+        return 0
     }
 }
 
