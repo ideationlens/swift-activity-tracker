@@ -7,16 +7,10 @@
 //
 
 import Foundation
+import RealmSwift
 
-class Entry: NSObject {
-    let activity: Activity
-    var value: Int
-    //createdDate
-    
-    init(activity: Activity, value: Int) {
-        self.activity = activity
-        self.value = value
-        super.init()
-    }
-    
+class Entry: Object {
+    @objc dynamic var value: Int = 0
+    @objc dynamic var timestamp: Date = Date()
+    var parentActivity = LinkingObjects(fromType: Activity.self, property: "entries")  
 }

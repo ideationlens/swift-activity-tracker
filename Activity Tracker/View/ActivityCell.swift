@@ -6,17 +6,53 @@
 //  Copyright © 2018 Douglas Putnam. All rights reserved.
 //
 
+import RealmSwift
 import UIKit
 
 class ActivityCell: UITableViewCell {
     
-    // Declare data properties
-    var activityName: String?
-    var tags: [Tag]?
-    var report0: String?
-    var report1: String?
-    var report2: String?
+    //MARK: PROPERTIES
+    var activityName: String? {
+        get {
+            return nameLabel.text
+        }
+        set {
+            nameLabel.text = newValue ?? "No name assigned"
+        }
+    }
+    
+    var report0: String? {
+        get {
+            return report0Label.text
+        }
+        set {
+            report0Label.text = newValue ?? ""
+        }
+    }
+    
+    var report1: String? {
+        get {
+            return report1Label.text
+        }
+        set {
+            report1Label.text = newValue ?? ""
+        }
+    }
+    
+    var report2: String? {
+        get {
+            return report2Label.text
+        }
+        set {
+            report2Label.text = newValue ?? ""
+        }
+    }
+    
     var entryType: EntryType?
+    
+    var tags: List<Tag>?
+    
+    
     var isDone = false
     
     // Declare view properties
@@ -125,12 +161,10 @@ class ActivityCell: UITableViewCell {
         return actionButton
     }()
 
+    // MARK: - METHODS
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        // Cell
-        //self.backgroundColor = UIColor.lightGray
         
         // Button View
         self.addSubview(actionButton)
@@ -164,13 +198,13 @@ class ActivityCell: UITableViewCell {
         super.layoutSubviews()
 
         // activityName
-        if let name = activityName {
-            nameLabel.text = name
-        }
+//        if let name = activityName {
+//            nameLabel.text = name
+//        }
         
         // tags
         if let tags = tags {
-            if !tags.isEmpty {
+            if tags.count > 0 {
                 var tagString = ""
                 for tag in tags {
                     tagString += "[" + tag.name + "], "

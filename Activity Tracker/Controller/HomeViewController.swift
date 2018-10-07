@@ -6,34 +6,39 @@
 //  Copyright © 2018 Douglas Putnam. All rights reserved.
 //
 
+import RealmSwift
 import UIKit
 
 class HomeViewController: UIViewController {
+    
+    // PROPERTIES
+    
+    // Database
+    let realm = try! Realm()
+    var tags: Results<Tag>?
+    var activeActivities: Results<Activity>?
+    var archivedActivities: Results<Activity>?
+    
+    var tagPickerData = [String]()
+    var reportTypePickerData = [String]()
 
-    // Tag Picker
+    // Views
     @IBOutlet weak var tagPicker: UIPickerView!
-    var tagPickerData: [String]!
-    
-    // Report Type Picker
-    @IBOutlet weak var reportTypePicker: UIPickerView!
-    var reportTypePickerData: [String]!
-    
-    // Table View
     @IBOutlet weak var activityTableView: UITableView!
-    var activityArray: [ActivityCell]!
-    var archiveArray: [ActivityCell]!
+    @IBOutlet weak var reportTypePicker: UIPickerView!
+    
     var isShowingArchived: Bool = false
+    
+    // MARK: - VIEW CONTROLLER METHODS
     
     override func loadView() {
         super.loadView()
         
-        // refresh all model arrays
-        loadTagArray()
+        // Load data
+        loadTags()
         loadReportTypeArray()
-        //loadActivityEntryArray()
-        //loadArchiveEntryArray()
-        loadActivityArray()
-        loadArchiveArray()
+        //createSampleActivities()
+        loadActivities()
         
         // Setup navigation bar
         navigationItem.leftBarButtonItem = editButtonItem
@@ -54,8 +59,6 @@ class HomeViewController: UIViewController {
         activityTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         activityTableView.separatorStyle = .singleLine
         activityTableView.rowHeight = 75
-//        activityTableView.autoresizingMask = .flexibleHeight
-//        activityTableView.estimatedRowHeight = 120
 
     }
     
@@ -83,7 +86,7 @@ class HomeViewController: UIViewController {
     
     // MARK: TAG METHODS
     
-    func loadTagArray() {
+    func loadTags() {
         tagPickerData = ["Morning","Exercise","Nutrition","All Activities"]
     }
     
@@ -96,97 +99,82 @@ class HomeViewController: UIViewController {
     // MARK: ENTRY METHODS
     
     // Activity Entry
+    // insert func to load all Entries
     // insert func to create a new Entry
-    
-    // Archive Entry
-    // insert func to refresh entryArray
+    // insert func to delete an Entry
     
     // MARK: ACTIVITY METHODS
     
-    // Activity
-    func loadActivityArray() {
-        let tag1 = Tag(name: "Daily")
-        let tag2 = Tag(name: "Exercise")
-        let tag3 = Tag(name: "Nutrition")
-        var cell = ActivityCell()
-        activityArray = [ActivityCell]()
+    func loadActivities() {
+        activeActivities = realm.objects(Activity.self).filter("isArchived == false")
+        archivedActivities = realm.objects(Activity.self).filter("isArchived == true")
+    }
+    
+    // Create Sample Activities
+    func createSampleActivities() {
+        let tag1 = Tag()
+        tag1.name = "Daily"
+        let tag2 = Tag()
+        tag2.name = "Exercise"
+        let tag3 = Tag()
+        tag3.name = "Nutrition"
         
-        cell.activityName = "Go to gym"
-        cell.tags = [tag1,tag2]
-        cell.report0 = "Streak: 1          "
-        cell.report1 = "     Avg: 2/week"
-        cell.report2 = "   Best: 6          "
-        cell.entryType = .checkbox
-        cell.actionButton.tag = 0
-        activityArray.append(cell)
-        
-        cell = ActivityCell()
-        cell.activityName = "Floss teeth"
-        cell.tags = [tag1,tag3]
-        cell.report0 = "Streak: 4"
-        cell.report1 = "Avg: 3 days"
-        cell.report2 = "Best: 6"
-        cell.entryType = .checkbox
-        cell.actionButton.tag = 1
-        activityArray.append(cell)
+        // save activity method
+        func save(activity: Activity) {
+            do {
+                try realm.write {
+                    realm.add(activity)
+                }
+            } catch {
+                print("Error saving context: \(error)")
+            }
+        }
 
-        cell = ActivityCell()
-        cell.activityName = "Eat veggies"
-        cell.tags = [tag2, tag3]
-        cell.report0 = "Count: 0"
-        cell.report1 = "Avg: 2/day"
-        cell.report2 = "Best: 6"
-        cell.entryType = .plusOneCounter
-        cell.actionButton.tag = 2
-        activityArray.append(cell)
+        // create sample activities
+        var activity = Activity()
+        activity.name = "Go to gym"
+        activity.tags.append(objectsIn: [tag1,tag2])
+        activity.entryTypeEnum = .checkbox
+        save(activity: activity)
+
+        activity = Activity()
+        activity.name = "Floss teeth"
+        activity.entryTypeEnum = .checkbox
+        save(activity: activity)
+
+        activity = Activity()
+        activity.name = "Eat veggies"
+        activity.tags.append(objectsIn: [tag2, tag3])
+        activity.entryTypeEnum = .plusOneCounter
+        save(activity: activity)
         
-        cell = ActivityCell()
-        cell.activityName = "Beers counter"
-        cell.tags = []
-        cell.report0 = "Today: 10"
-        cell.report1 = "Week: 20"
-        cell.report2 = "Avg: 2/day"
-        cell.entryType = .plusOneCounter
-        cell.actionButton.tag = 4
-        activityArray.append(cell)
+        activity = Activity()
+        activity.name = "Beer counter"
+        activity.entryTypeEnum = .plusOneCounter
+        save(activity: activity)
         
-        cell = ActivityCell()
-        cell.activityName = "Read"
-        cell.tags = [tag1]
-        cell.report0 = "Streak: 1"
-        cell.report1 = "Avg: 2"
-        cell.report2 = "Best: 4"
-        cell.entryType = .yesNo
-        cell.actionButton.tag = 3
-        activityArray.append(cell)
+        activity = Activity()
+        activity.name = "Read"
+        activity.tags.append(tag3)
+        activity.entryTypeEnum = .yesNo
+        save(activity: activity)
+        
+        activity = Activity()
+        activity.name = "Do 20,000 Pushups"
+        activity.tags.append(tag2)
+        activity.entryTypeEnum = .keypad
+        activity.isArchived = false
+        save(activity: activity)
+        
+        activity = Activity()
+        activity.name = "Avoid Cigarettes"
+        activity.tags.append(tag1)
+        activity.entryTypeEnum = .yesNo
+        activity.isArchived = false
+        save(activity: activity)
     }
     
     // insert func to sort activityArray
-    
-    // Archive
-    func loadArchiveArray() {
-        let tag1 = Tag(name: "Daily")
-        let tag2 = Tag(name: "Exercise")
-        var cell = ActivityCell()
-        archiveArray = [ActivityCell]()
-        
-        cell.activityName = "Do 20,000 Pushups"
-        cell.tags = [tag2]
-        cell.report0 = "Days: 245"
-        cell.report1 = "Avg: 82/day"
-        cell.report2 = "Total: 20,000"
-        cell.entryType = .keypad
-        archiveArray.append(cell)
-        
-        cell = ActivityCell()
-        cell.activityName = "Avoid Cigarettes"
-        cell.tags = [tag1]
-        cell.report0 = "Streak: 30"
-        cell.report1 = "Yes: 70"
-        cell.report2 = "Days: 300"
-        cell.entryType = .yesNo
-        archiveArray.append(cell)
-    }
     
     // insert func to get report labels for a given activity
     
@@ -215,20 +203,26 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     // Initiate the creation of a new Entry
     @objc func createEntry(sender: UIButton) {
-        if let activity = activityArray[sender.tag].activityName {
+        if let activity = activeActivities?[sender.tag].name {
             print("creating entry for \(activity)!")
         }
     }
     
     // Populate TableView Cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         
         if indexPath.section == 0 {
-            cell = activityArray[indexPath.row]
+            cell.activityName = activeActivities?[indexPath.row].name ?? "No name"
+            cell.tags = activeActivities?[indexPath.row].tags
+            cell.entryType = activeActivities?[indexPath.row].entryTypeEnum
+            cell.report0 = "Today: 0"
+            cell.report1 = "7 days: 4"
+            cell.report2 = "30 days: 19"
         } else {
             if isShowingArchived {
-                cell = archiveArray[indexPath.row]
+                cell.activityName = archivedActivities?[indexPath.row].name ?? "No name"
+                cell.tags = archivedActivities?[indexPath.row].tags
             } else {
                 let placeholderCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
                 placeholderCell.textLabel?.attributedText = NSAttributedString(string: "show archived activities", attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)])
@@ -257,9 +251,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     // Number of rows in a given section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return activityArray.count
+            return activeActivities?.count ?? 0
         } else {
-            return isShowingArchived ? archiveArray.count : 1
+            return isShowingArchived ? archivedActivities?.count ?? 0 : 1
         }
     }
 }
