@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.leftBarButtonItem?.tintColor = UIColor.black
         navigationItem.rightBarButtonItem?.tintColor = UIColor.black
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "HomeRun", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor.black
         
         // Setup UIPickerViews
@@ -85,8 +85,6 @@ class HomeViewController: UIViewController {
         print("Creating new activity tracker")
     }
     
-    
-    
     // MARK: - MODEL METHODS
     
     // MARK: TAG METHODS
@@ -103,8 +101,28 @@ class HomeViewController: UIViewController {
     
     // MARK: ENTRY METHODS
     
-    // insert func to load all Entries
-    // insert func to create a new Entry
+    // insert func to load all Entries / get data for report labels
+
+    // Create New Entry
+    @objc func createEntry(sender: UIButton) {
+        if let activity = activeActivities?[sender.tag].name {
+            print("creating entry for \(activity)!")
+            
+            if let currentActivity = self.activeActivities?[sender.tag] {
+                do {
+                    try self.realm.write {
+                        let newEntry = Entry()
+                        newEntry.value = 1
+                        newEntry.timestamp = Date()
+                        currentActivity.entries.append(newEntry)
+                    }
+                } catch {
+                    print("Error saving new entry, \(error)")
+                }
+            }
+        }
+    }
+    
     // insert func to delete an Entry
     
     // MARK: ACTIVITY METHODS
@@ -218,26 +236,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 if let activity = archivedActivities?[indexPath.row] {
                     goToDetails(of: activity)
-                }
-            }
-        }
-    }
-    
-    // Initiate the creation of a new Entry
-    @objc func createEntry(sender: UIButton) {
-        if let activity = activeActivities?[sender.tag].name {
-            print("creating entry for \(activity)!")
-            
-            if let currentActivity = self.activeActivities?[sender.tag] {
-                do {
-                    try self.realm.write {
-                        let newEntry = Entry()
-                        newEntry.value = 1
-                        newEntry.timestamp = Date()
-                        currentActivity.entries.append(newEntry)
-                    }
-                } catch {
-                    print("Error saving new entry, \(error)")
                 }
             }
         }

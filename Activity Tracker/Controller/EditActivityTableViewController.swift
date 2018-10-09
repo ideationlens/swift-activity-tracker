@@ -6,22 +6,29 @@
 //  Copyright © 2018 Douglas Putnam. All rights reserved.
 //
 
+import RealmSwift
 import UIKit
 
 class EditActivityTableViewController: UITableViewController {
     
     // PROPERTIES
+    let realm = try! Realm()
     
     // Activity
     var activity: Activity?
     
     // Name
-    var activityName = String()
+    var activityName = "" {
+        didSet {
+            print(activityName)
+        }
+    }
     
     // Recurrence Setting
+    var recurrenceSetting = RecurrenceType.immediately
     let recurrenceStrings: [RecurrenceType: String] = [.daily: "Resets Daily", .immediately: "Resets Immediately"]
     let recurrenceSwitch: [RecurrenceType: Bool] = [.daily: true, .immediately: false]
-    let recurrenceValue: [Bool: RecurrenceType] = [true: .daily, false: .immediately]
+    let recurrenceValues: [Bool: RecurrenceType] = [true: .daily, false: .immediately]
     
     
     // MARK: - VIEW CONTROLLER METHODS
@@ -38,27 +45,18 @@ class EditActivityTableViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
         
+        // Initialize Properties
+        setupLocalProperties()
         
-        
-        loadActivity()
-        
-        
-//        self.tableView.
-//        self.tableView.rowHeight = 60
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // Setup TextField
     }
     
     // MARK: - DATA METHODS
     
-    func loadActivity() {
-        if activity == nil {
-            activity = Activity()
-            activity?.name = "Go to Gym"
-            activity?.recurrenceTypeEnum = .immediately
+    func setupLocalProperties() {
+        if let currentActivity = activity {
+            activityName = currentActivity.name
+            recurrenceSetting = currentActivity.recurrenceTypeEnum
         }
     }
     
@@ -74,8 +72,7 @@ class EditActivityTableViewController: UITableViewController {
         print("changing settings for button \(sender.tag) to \(sender.isOn)")
         switch sender.tag {
         case 1:
-            activity?.recurrenceTypeEnum = recurrenceValue[sender.isOn]!
-            saveChanges()
+            recurrenceSetting = recurrenceValues[sender.isOn]!
             self.tableView.reloadData()
         default:
             print("unrecognized switch")
@@ -101,17 +98,16 @@ class EditActivityTableViewController: UITableViewController {
         case 0:
             let cell = TextEntryCell()
             cell.title = "Name"
-            if let name = activity?.name {
-                cell.entryField.text = name
-            }
+            cell.entryField.text = activityName
+            cell.entryField.delegate = self
             cell.layoutSubviews()
             return cell
             
         case 1:
             let cell = SwitchCell()
-            cell.name = recurrenceStrings[activity?.recurrenceTypeEnum ?? .daily]
+            cell.name = recurrenceStrings[recurrenceSetting]
             cell.settingSwitch.tag = indexPath.row
-            cell.isSwitchOn = recurrenceSwitch[activity?.recurrenceTypeEnum ?? .daily]!
+            cell.isSwitchOn = recurrenceSetting == .daily ? true : false  //recurrenceSwitch[recurrenceSetting]!
             cell.layoutSubviews()
             return cell
             
@@ -166,8 +162,43 @@ class EditActivityTableViewController: UITableViewController {
 
     @objc func donePressed() {
         // save activity
-        // dismiss 
-    }
- 
+        if let currentActivity = self.activity {
+            do {
+                try self.realm.write {
+                   currentActivity.name = activityName
+                    currentActivity.recurrenceTypeEnum = recurrenceSetting
+                }
+            } catch {
+                print("Error saving activity, \(error)")
+            }
+        } else {
+        // create new activity
+            do {
+                try self.realm.write {
+                    let newActivity = Activity()
+                    newActivity.name = activityName
+                    newActivity.recurrenceTypeEnum = recurrenceSetting
+                }
+            } catch {
+                print("Error saving activity, \(error)")
+            }
+        }
 
+        // dismiss
+       _ = navigationController?.popViewController(animated: true)
+    }
+}
+
+extension EditActivityTableViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let nsString = textField.text as NSString?
+        let newString = nsString?.replacingCharacters(in: range, with: string)
+        
+        if let text = newString {
+            activityName = text
+        }
+        
+        return true
+    }   
 }

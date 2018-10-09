@@ -94,11 +94,3 @@ class TextEntryCell: UITableViewCell {
         // Configure the view for the selected state
     }
 }
-
-extension TextEntryCell: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        print(string)
-        entry = string
-        return true
-    }
-}

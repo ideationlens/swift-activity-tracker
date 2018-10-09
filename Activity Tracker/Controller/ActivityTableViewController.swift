@@ -106,7 +106,7 @@ class ActivityTableViewController: UITableViewController {
     @objc func editActivity() {
         let vc = EditActivityTableViewController()
         vc.activity = selectedActivity
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel1", style: .plain, target: nil, action: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
     /*
