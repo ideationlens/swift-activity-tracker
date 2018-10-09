@@ -44,6 +44,8 @@ class HomeViewController: UIViewController {
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.leftBarButtonItem?.tintColor = UIColor.black
         navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "HomeRun", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = UIColor.black
         
         // Setup UIPickerViews
         tagPicker.delegate = self
@@ -61,7 +63,6 @@ class HomeViewController: UIViewController {
         activityTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         activityTableView.separatorStyle = .singleLine
         activityTableView.rowHeight = 75
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,9 +91,7 @@ class HomeViewController: UIViewController {
         // change back button to say cancel when navigating to EditActivityTableviewController
         if segue.identifier == "addActivity" {
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
-            navigationItem.backBarButtonItem?.tintColor = UIColor.black
         }
-        
     }
     
     // MARK: - MODEL METHODS
@@ -111,7 +110,6 @@ class HomeViewController: UIViewController {
     
     // MARK: ENTRY METHODS
     
-    // Activity Entry
     // insert func to load all Entries
     // insert func to create a new Entry
     // insert func to delete an Entry
@@ -195,11 +193,12 @@ class HomeViewController: UIViewController {
     
     // MARK: - NAVIGATION METHODS
     
-    // insert func to navigate to New Activity Screen
-    
     // insert func to navigate to Activity Screen
-    
-
+    @objc func goToDetails(of activity: Activity) {
+        let vc = ActivityTableViewController()
+        vc.selectedActivity = activity
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: - TABLEVIEW
@@ -208,9 +207,19 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     // Cell Selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 1 && !isShowingArchived {
             isShowingArchived = !isShowingArchived
             activityTableView.reloadData()
+        } else {
+            if indexPath.section == 0 {
+                if let activity = activeActivities?[indexPath.row] {
+                    goToDetails(of: activity)
+                }
+            } else {
+                if let activity = archivedActivities?[indexPath.row] {
+                    goToDetails(of: activity)
+                }
+            }
         }
     }
     
@@ -218,6 +227,19 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     @objc func createEntry(sender: UIButton) {
         if let activity = activeActivities?[sender.tag].name {
             print("creating entry for \(activity)!")
+            
+            if let currentActivity = self.activeActivities?[sender.tag] {
+                do {
+                    try self.realm.write {
+                        let newEntry = Entry()
+                        newEntry.value = 1
+                        newEntry.timestamp = Date()
+                        currentActivity.entries.append(newEntry)
+                    }
+                } catch {
+                    print("Error saving new entry, \(error)")
+                }
+            }
         }
     }
     
@@ -229,6 +251,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.activityName = activeActivities?[indexPath.row].name ?? "No name"
             cell.tags = activeActivities?[indexPath.row].tags
             cell.entryType = activeActivities?[indexPath.row].entryTypeEnum
+            cell.actionButton.tag = indexPath.row
             cell.report0 = "Today: 0"
             cell.report1 = "7 days: 4"
             cell.report2 = "30 days: 19"
@@ -236,6 +259,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if isShowingArchived {
                 cell.activityName = archivedActivities?[indexPath.row].name ?? "No name"
                 cell.tags = archivedActivities?[indexPath.row].tags
+                cell.actionButton.isEnabled = false
             } else {
                 let placeholderCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
                 placeholderCell.textLabel?.attributedText = NSAttributedString(string: "show archived activities", attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)])

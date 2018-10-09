@@ -9,13 +9,31 @@
 import UIKit
 
 class EditActivityTableViewController: UITableViewController {
-
+    
+    // PROPERTIES
+    
+    // Activity
+    var activity: Activity?
+    
+    // Name
+    var activityName = String()
+    
+    // Recurrence Setting
+    let recurrenceStrings: [RecurrenceType: String] = [.daily: "Resets Daily", .immediately: "Resets Immediately"]
+    let recurrenceSwitch: [RecurrenceType: Bool] = [.daily: true, .immediately: false]
+    let recurrenceValue: [Bool: RecurrenceType] = [true: .daily, false: .immediately]
+    
+    
+    // MARK: - VIEW CONTROLLER METHODS
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Add"
-        
         navigationItem.leftBarButtonItem?.title = "Cancel"
+        
+        loadActivity()
+        
         
 //        self.tableView.
 //        self.tableView.rowHeight = 60
@@ -25,14 +43,38 @@ class EditActivityTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
-    // MARK: - Event Methods
     
-    @IBAction func settingSwitched(sender: UISwitch) {
-        print("changing settings for button \(sender.tag) to \(sender.isOn)")
+    // MARK: - DATA METHODS
+    
+    func loadActivity() {
+        if activity == nil {
+            activity = Activity()
+            activity?.name = "Go to Gym"
+            activity?.recurrenceTypeEnum = .immediately
+        }
     }
     
-    // MARK: - Table view data source
+    func saveChanges() {
+        guard let nameCell = tableView(self.tableView, cellForRowAt: IndexPath(row: 0, section: 1)) as? TextEntryCell else {fatalError()}
+        print("name of activity is... \(nameCell.entry)")
+        activity?.name = nameCell.entry     }
+
+    // MARK: - EVENT METHODS
+    
+    // user switched a setting
+    @IBAction func settingSwitched(sender: UISwitch) {
+        print("changing settings for button \(sender.tag) to \(sender.isOn)")
+        switch sender.tag {
+        case 1:
+            activity?.recurrenceTypeEnum = recurrenceValue[sender.isOn]!
+            saveChanges()
+            self.tableView.reloadData()
+        default:
+            print("unrecognized switch")
+        }
+    }
+    
+    // MARK: - TABLEVIEW METHODS
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -46,14 +88,33 @@ class EditActivityTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = SwitchCell()
-        
-        cell.name = "Resets Daily"
-        cell.settingSwitch.tag = indexPath.row
-        cell.isSwitchOn = true
-        cell.layoutSubviews()
-
-        return cell
+        // return custom cell dependent on indexPath
+        switch indexPath.row {
+        case 0:
+            let cell = TextEntryCell()
+            cell.title = "Name"
+            if let name = activity?.name {
+                cell.entryField.text = name
+            }
+            cell.layoutSubviews()
+            return cell
+            
+        case 1:
+            let cell = SwitchCell()
+            cell.name = recurrenceStrings[activity?.recurrenceTypeEnum ?? .daily]
+            cell.settingSwitch.tag = indexPath.row
+            cell.isSwitchOn = recurrenceSwitch[activity?.recurrenceTypeEnum ?? .daily]!
+            cell.layoutSubviews()
+            return cell
+            
+        default:
+            let cell = SwitchCell()
+            cell.name = "Resets Daily"
+            cell.settingSwitch.tag = indexPath.row
+            cell.isSwitchOn = true
+            cell.layoutSubviews()
+            return cell
+        }
     }
 
 
