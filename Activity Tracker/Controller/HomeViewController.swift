@@ -85,14 +85,7 @@ class HomeViewController: UIViewController {
         print("Creating new activity tracker")
     }
     
-    // MARK: NAVIGATION METHODS
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // change back button to say cancel when navigating to EditActivityTableviewController
-        if segue.identifier == "addActivity" {
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
-        }
-    }
     
     // MARK: - MODEL METHODS
     
@@ -191,9 +184,16 @@ class HomeViewController: UIViewController {
     
     // insert func to get tags for a give activity
     
-    // MARK: - NAVIGATION METHODS
+    // MARK: - Navigation Methods
     
-    // insert func to navigate to Activity Screen
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // change back button to say cancel when navigating to EditActivityTableviewController
+        if segue.identifier == "addActivity" {
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        }
+    }
+    
+    // Go to Activity Screen
     @objc func goToDetails(of activity: Activity) {
         let vc = ActivityTableViewController()
         vc.selectedActivity = activity

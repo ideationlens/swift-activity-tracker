@@ -27,34 +27,29 @@ class ActivityTableViewController: UITableViewController {
             self.title = "Unknown Activity"
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editActivity))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.black
-//        navigationItem.rightBarButtonItem = editButtonItem
-//        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+        navigationItem.backBarButtonItem?.tintColor = UIColor.black
         
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // setup tableview
+        self.clearsSelectionOnViewWillAppear = false
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 3
+        return 0 //3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        switch section {
-        case 0: return 1
-        case 1: return 1
-        case 2: return entries?.count ?? 0
-        default: return 0
-        }
+        return 0
+//        switch section {
+//        case 0: return 1
+//        case 1: return 1
+//        case 2: return entries?.count ?? 0
+//        default: return 0
+//        }
     }
 
     /*
@@ -106,6 +101,13 @@ class ActivityTableViewController: UITableViewController {
     
     func loadEntries() {
         entries = selectedActivity?.entries.sorted(byKeyPath: "timestamp", ascending: false)
+    }
+    
+    @objc func editActivity() {
+        let vc = EditActivityTableViewController()
+        vc.activity = selectedActivity
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     /*
     // MARK: - Navigation
