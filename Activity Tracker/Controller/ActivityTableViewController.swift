@@ -98,9 +98,13 @@ class ActivityTableViewController: UITableViewController {
             return cell
             
         case 1: // reports
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = "Insert reports here"
-            return cell
+            let reportCell = ReportCell()
+            reportCell.titleLabel.text = "Count Stats"
+            reportCell.report0 = "30 days: \n15"
+            reportCell.report1 = "7 days: \n4"
+            reportCell.report2 = "1 days: \n1"
+            reportCell.layoutSubviews()
+            return reportCell
             
         case 2: // entries
             let entryCell = EntryCell()
@@ -115,7 +119,6 @@ class ActivityTableViewController: UITableViewController {
             return cell
         }
     }
-
 
     // MARK: - NAVIGATION
 
