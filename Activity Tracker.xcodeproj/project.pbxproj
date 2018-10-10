@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0B1F684082DBF3E97E7E0F4A /* Pods_Activity_Tracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87CAA3401371821CB8BE2D8D /* Pods_Activity_Tracker.framework */; };
 		5F07C335216D05DF004A79BC /* ActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C334216D05DF004A79BC /* ActivityTableViewController.swift */; };
+		5F07C337216E61B5004A79BC /* EntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C336216E61B5004A79BC /* EntryCell.swift */; };
+		5F07C339216E69C6004A79BC /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C338216E69C6004A79BC /* Date.swift */; };
 		5F9CC9E0216198EC00062258 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9DF216198EC00062258 /* AppDelegate.swift */; };
 		5F9CC9E2216198EC00062258 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9E1216198EC00062258 /* HomeViewController.swift */; };
 		5F9CC9E5216198EC00062258 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F9CC9E3216198EC00062258 /* Main.storyboard */; };
@@ -30,6 +32,8 @@
 /* Begin PBXFileReference section */
 		530CB1BCCA8D4DEECA3D300A /* Pods-Activity Tracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Activity Tracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Activity Tracker/Pods-Activity Tracker.debug.xcconfig"; sourceTree = "<group>"; };
 		5F07C334216D05DF004A79BC /* ActivityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTableViewController.swift; sourceTree = "<group>"; };
+		5F07C336216E61B5004A79BC /* EntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryCell.swift; sourceTree = "<group>"; };
+		5F07C338216E69C6004A79BC /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		5F9CC9DC216198EC00062258 /* Activity Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Activity Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F9CC9DF216198EC00062258 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F9CC9E1216198EC00062258 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 				5F9CCA002163D3CB00062258 /* ReportType.swift */,
 				5F9CCA042163D4BC00062258 /* Tag.swift */,
 				5F9CC9FC2163D20C00062258 /* User.swift */,
+				5F07C338216E69C6004A79BC /* Date.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 				5F9CC9F6216306F500062258 /* ActivityCell.swift */,
 				5FA08089216AA1F700611958 /* SwitchCell.swift */,
 				5FA0808B216AB81400611958 /* TextEntryCell.swift */,
+				5F07C336216E61B5004A79BC /* EntryCell.swift */,
 				5F9CC9E3216198EC00062258 /* Main.storyboard */,
 				5F9CC9E8216198EE00062258 /* LaunchScreen.storyboard */,
 			);
@@ -263,7 +269,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F9CC9FB2163D11800062258 /* Entry.swift in Sources */,
+				5F07C337216E61B5004A79BC /* EntryCell.swift in Sources */,
 				5F9CCA012163D3CB00062258 /* ReportType.swift in Sources */,
+				5F07C339216E69C6004A79BC /* Date.swift in Sources */,
 				5F9CCA052163D4BC00062258 /* Tag.swift in Sources */,
 				5F9CC9E2216198EC00062258 /* HomeViewController.swift in Sources */,
 				5FA0808C216AB81400611958 /* TextEntryCell.swift in Sources */,

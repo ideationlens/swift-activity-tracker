@@ -13,9 +13,9 @@ class ActivityTableViewController: UITableViewController {
 
     // MARK: PROPERTIES
     
+    let realm = try! Realm()
     var selectedActivity: Activity?
     var entries: Results<Entry>?
-    let realm = try! Realm()
     
     // MARK: - VIEW CONTROLLER METHODS
     
@@ -30,10 +30,10 @@ class ActivityTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateUI()
+        updateNavBarTitle()
     }
 
-    // MARK: - UI Methods
+    // MARK: - NAVBAR
     
     func configureNavBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editActivity))
@@ -41,12 +41,7 @@ class ActivityTableViewController: UITableViewController {
         navigationItem.backBarButtonItem?.tintColor = UIColor.black
     }
     
-    func configureTableView() {
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.clearsSelectionOnViewWillAppear = false
-    }
-    
-    func updateUI() {
+    func updateNavBarTitle() {
         // set title of page
         if let name = selectedActivity?.name {
             self.title = name
@@ -55,14 +50,21 @@ class ActivityTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - REALM METHODS
+    // MARK: - REALM
     
     func loadEntries() {
         entries = selectedActivity?.entries.sorted(byKeyPath: "timestamp", ascending: false)
     }
     
-    // MARK: - TABLEVIEW DATA SOURCE
+    // MARK: - TABLEVIEW
 
+    func configureTableView() {
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.clearsSelectionOnViewWillAppear = false
+    }
+    
+    // MARK: TABLEVIEW DATA SOURCE
+    
     // TableView Sections Defined
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
@@ -86,7 +88,7 @@ class ActivityTableViewController: UITableViewController {
         }
     }
 
-    // TableView Rows Defined
+    // TableView Rows (Cells) Defined
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         switch indexPath.section {
@@ -101,11 +103,12 @@ class ActivityTableViewController: UITableViewController {
             return cell
             
         case 2: // entries
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            if let timestamp = entries?[indexPath.row].timestamp {
-                cell.textLabel?.text = "\(timestamp)"
+            let entryCell = EntryCell()
+            if let entry = entries?[indexPath.row] {
+                entryCell.entry = entry
+                entryCell.layoutSubviews()
             }
-            return cell
+            return entryCell
             
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
@@ -114,7 +117,7 @@ class ActivityTableViewController: UITableViewController {
     }
 
 
-    // MARK: - Navigation
+    // MARK: - NAVIGATION
 
     @objc func editActivity() {
         let vc = EditActivityTableViewController()
