@@ -19,14 +19,7 @@ class ActivityTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Setup Nav Bar
-        if let name = selectedActivity?.name {
-            self.title = name
-            loadEntries()
-        } else {
-            self.title = "Unknown Activity"
-        }
-        
+        // setup nav bar
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editActivity))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.black
         navigationItem.backBarButtonItem?.tintColor = UIColor.black
@@ -34,7 +27,24 @@ class ActivityTableViewController: UITableViewController {
         // setup tableview
         self.clearsSelectionOnViewWillAppear = false
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateUI()
+    }
 
+    // MARK: - UI Methods
+    
+    func updateUI() {
+        // set title of page
+        if let name = selectedActivity?.name {
+            self.title = name
+            loadEntries()
+        } else {
+            self.title = "Unknown Activity"
+        }
+    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -106,7 +116,7 @@ class ActivityTableViewController: UITableViewController {
     @objc func editActivity() {
         let vc = EditActivityTableViewController()
         vc.activity = selectedActivity
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel1", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
     /*

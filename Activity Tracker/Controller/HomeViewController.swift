@@ -34,12 +34,6 @@ class HomeViewController: UIViewController {
     override func loadView() {
         super.loadView()
         
-        // Load data
-        loadTags()
-        loadReportTypeArray()
-        //createSampleActivities()
-        loadActivities()
-        
         // Setup navigation bar
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.leftBarButtonItem?.tintColor = UIColor.black
@@ -68,17 +62,24 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Load data
+        loadActivities()
+        //loadReportLabels
+        loadTags()
+        loadReportTypeArray()
+        //createSampleActivities()
+        activityTableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // continue pickerview setup
+        tagPicker.selectRow(tagPickerData.count - 1, inComponent: 0, animated: true)
+        
         // continue tableview setup
         if let indexPath = activityTableView.indexPathForSelectedRow {
             activityTableView.deselectRow(at: indexPath, animated: true)
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // continue pickerview setup
-        tagPicker.selectRow(tagPickerData.count - 1, inComponent: 0, animated: true)
     }
 
     @IBAction func addButtonPressed(_ sender: Any) {

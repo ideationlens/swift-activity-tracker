@@ -60,10 +60,32 @@ class EditActivityTableViewController: UITableViewController {
         }
     }
     
-    func saveChanges() {
-        guard let nameCell = tableView(self.tableView, cellForRowAt: IndexPath(row: 0, section: 1)) as? TextEntryCell else {fatalError()}
-        print("name of activity is... \(nameCell.entry)")
-        activity?.name = nameCell.entry     }
+    // Save Activity
+    func saveActivity() {
+        // save changes
+        if let currentActivity = self.activity {
+            do {
+                try self.realm.write {
+                    currentActivity.name = activityName
+                    currentActivity.recurrenceTypeEnum = recurrenceSetting
+                }
+            } catch {
+                print("Error saving activity, \(error)")
+            }
+        } else {
+        // or create new
+            do {
+                try self.realm.write {
+                    let newActivity = Activity()
+                    newActivity.name = activityName
+                    newActivity.recurrenceTypeEnum = recurrenceSetting
+                    realm.add(newActivity)
+                }
+            } catch {
+                print("Error creating new activity, \(error)")
+            }
+        }
+    }
 
     // MARK: - EVENT METHODS
     
@@ -79,18 +101,15 @@ class EditActivityTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - TABLEVIEW METHODS
+    // MARK: - TABLEVIEW DATA SOURCE
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 2
     }
-
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // return custom cell dependent on indexPath
@@ -100,6 +119,7 @@ class EditActivityTableViewController: UITableViewController {
             cell.title = "Name"
             cell.entryField.text = activityName
             cell.entryField.delegate = self
+            cell.tag = 0
             cell.layoutSubviews()
             return cell
             
@@ -121,68 +141,11 @@ class EditActivityTableViewController: UITableViewController {
         }
     }
 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    
     // MARK: - Navigation
 
     @objc func donePressed() {
         // save activity
-        if let currentActivity = self.activity {
-            do {
-                try self.realm.write {
-                   currentActivity.name = activityName
-                    currentActivity.recurrenceTypeEnum = recurrenceSetting
-                }
-            } catch {
-                print("Error saving activity, \(error)")
-            }
-        } else {
-        // create new activity
-            do {
-                try self.realm.write {
-                    let newActivity = Activity()
-                    newActivity.name = activityName
-                    newActivity.recurrenceTypeEnum = recurrenceSetting
-                }
-            } catch {
-                print("Error saving activity, \(error)")
-            }
-        }
+       saveActivity()
 
         // dismiss
        _ = navigationController?.popViewController(animated: true)
@@ -191,6 +154,7 @@ class EditActivityTableViewController: UITableViewController {
 
 extension EditActivityTableViewController: UITextFieldDelegate {
     
+    // fetch text from UI text fields
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let nsString = textField.text as NSString?
         let newString = nsString?.replacingCharacters(in: range, with: string)
