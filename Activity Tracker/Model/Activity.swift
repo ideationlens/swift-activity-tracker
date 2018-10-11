@@ -41,32 +41,4 @@ class Activity: Object {
     
     // MARK: - METHODS
     
-    
-//    var name: String
-//    var tags: [Tag]
-//    let entryType: EntryType
-//    var recurrenceType: RecurrenceType
-//    var reportType: ReportType
-//    var units: String
-//    var isArchived: Bool
-//
-//    init(name: String
-//             ,tags: [Tag]
-//             ,entryType: EntryType = .plusOneCounter
-//             ,recurrenceType: RecurrenceType = .immediately
-//             ,reportType: ReportType = .count
-//             ,units: String = "Count")
-//    {
-//        self.name = name
-//        self.tags = tags
-//        self.entryType = entryType
-//        self.recurrenceType = recurrenceType
-//        self.reportType = reportType
-//        self.units = units
-//        self.isArchived = false
-//
-//        super.init()
-//    }
-//
-    
 }

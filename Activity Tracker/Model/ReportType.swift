@@ -10,4 +10,6 @@ import Foundation
 
 enum ReportType: Int {
     case count = 0, change, streak, timePassed
+    
+    static let string: [ReportType: String] = [.count: "Count", .change: "Change", .streak: "Streak", .timePassed: "Time Passed"]
 }

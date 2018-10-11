@@ -46,6 +46,7 @@ class EntryCell: UITableViewCell {
         
         // cell
         self.selectionStyle = .default
+        self.accessoryType = .none
         
         // title
         self.addSubview(dateLabel)

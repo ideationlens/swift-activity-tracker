@@ -12,6 +12,7 @@
 		5F07C337216E61B5004A79BC /* EntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C336216E61B5004A79BC /* EntryCell.swift */; };
 		5F07C339216E69C6004A79BC /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C338216E69C6004A79BC /* Date.swift */; };
 		5F07C33B216E7D82004A79BC /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C33A216E7D82004A79BC /* ReportCell.swift */; };
+		5F07C33D216EAC9B004A79BC /* DisclosureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C33C216EAC9B004A79BC /* DisclosureCell.swift */; };
 		5F9CC9E0216198EC00062258 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9DF216198EC00062258 /* AppDelegate.swift */; };
 		5F9CC9E2216198EC00062258 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9E1216198EC00062258 /* HomeViewController.swift */; };
 		5F9CC9E5216198EC00062258 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F9CC9E3216198EC00062258 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 		5F07C336216E61B5004A79BC /* EntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryCell.swift; sourceTree = "<group>"; };
 		5F07C338216E69C6004A79BC /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		5F07C33A216E7D82004A79BC /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
+		5F07C33C216EAC9B004A79BC /* DisclosureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureCell.swift; sourceTree = "<group>"; };
 		5F9CC9DC216198EC00062258 /* Activity Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Activity Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F9CC9DF216198EC00062258 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F9CC9E1216198EC00062258 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			children = (
 				5F9CC9F6216306F500062258 /* ActivityCell.swift */,
 				5F07C336216E61B5004A79BC /* EntryCell.swift */,
+				5F07C33C216EAC9B004A79BC /* DisclosureCell.swift */,
 				5F9CC9E8216198EE00062258 /* LaunchScreen.storyboard */,
 				5F9CC9E3216198EC00062258 /* Main.storyboard */,
 				5F07C33A216E7D82004A79BC /* ReportCell.swift */,
@@ -273,6 +276,7 @@
 			files = (
 				5F9CC9FB2163D11800062258 /* Entry.swift in Sources */,
 				5F07C337216E61B5004A79BC /* EntryCell.swift in Sources */,
+				5F07C33D216EAC9B004A79BC /* DisclosureCell.swift in Sources */,
 				5F9CCA012163D3CB00062258 /* ReportType.swift in Sources */,
 				5F07C339216E69C6004A79BC /* Date.swift in Sources */,
 				5F9CCA052163D4BC00062258 /* Tag.swift in Sources */,

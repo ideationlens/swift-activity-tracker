@@ -18,11 +18,10 @@ class EditActivityTableViewController: UITableViewController {
     var activity: Activity?
     
     // Name
-    var activityName = "" {
-        didSet {
-            print(activityName)
-        }
-    }
+    var activityName = ""
+    
+    // Report Type
+    var reportType = ReportType.count
     
     // Recurrence Setting
     var recurrenceSetting = RecurrenceType.immediately
@@ -30,6 +29,8 @@ class EditActivityTableViewController: UITableViewController {
     let recurrenceSwitch: [RecurrenceType: Bool] = [.daily: true, .immediately: false]
     let recurrenceValues: [Bool: RecurrenceType] = [true: .daily, false: .immediately]
     
+    // Is Archived
+    var isArchived = false
     
     // MARK: - VIEW CONTROLLER METHODS
     
@@ -57,6 +58,8 @@ class EditActivityTableViewController: UITableViewController {
         if let currentActivity = activity {
             activityName = currentActivity.name
             recurrenceSetting = currentActivity.recurrenceTypeEnum
+            reportType = currentActivity.reportTypeEnum
+            isArchived = currentActivity.isArchived
         }
     }
     
@@ -68,6 +71,8 @@ class EditActivityTableViewController: UITableViewController {
                 try self.realm.write {
                     currentActivity.name = activityName
                     currentActivity.recurrenceTypeEnum = recurrenceSetting
+                    currentActivity.reportTypeEnum = reportType
+                    currentActivity.isArchived = isArchived
                 }
             } catch {
                 print("Error saving activity, \(error)")
@@ -79,6 +84,8 @@ class EditActivityTableViewController: UITableViewController {
                     let newActivity = Activity()
                     newActivity.name = activityName
                     newActivity.recurrenceTypeEnum = recurrenceSetting
+                    newActivity.reportTypeEnum = reportType
+                    newActivity.isArchived = isArchived
                     realm.add(newActivity)
                 }
             } catch {
@@ -95,7 +102,10 @@ class EditActivityTableViewController: UITableViewController {
         switch sender.tag {
         case 1:
             recurrenceSetting = recurrenceValues[sender.isOn]!
-            self.tableView.reloadData()
+            self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
+        case 3:
+            isArchived = !isArchived
+            self.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .fade)
         default:
             print("unrecognized switch")
         }
@@ -108,7 +118,7 @@ class EditActivityTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,15 +135,33 @@ class EditActivityTableViewController: UITableViewController {
             
         case 1:
             let cell = SwitchCell()
-            cell.name = recurrenceStrings[recurrenceSetting]
-            cell.settingSwitch.tag = indexPath.row
-            cell.isSwitchOn = recurrenceSetting == .daily ? true : false  //recurrenceSwitch[recurrenceSetting]!
+            cell.title = recurrenceStrings[recurrenceSetting]
+            cell.settingSwitch.tag = 1
+            cell.settingSwitch.addTarget(self, action: #selector(settingSwitched(sender:)), for: .touchUpInside)
+            cell.isSwitchOn = recurrenceSwitch[recurrenceSetting]!
+            cell.layoutSubviews()
+            return cell
+            
+        case 2:
+            let cell = DisclosureCell()
+            cell.title = "Report"
+            cell.tag = 2
+            cell.detail = ReportType.string[reportType]
+            cell.layoutSubviews()
+            return cell
+            
+        case 3:
+            let cell = SwitchCell()
+            cell.title = isArchived ? "Activity is archived" : "Activity is not archived"
+            cell.settingSwitch.tag = 3
+            cell.settingSwitch.addTarget(self, action: #selector(settingSwitched(sender:)), for: .touchUpInside)
+            cell.isSwitchOn = isArchived
             cell.layoutSubviews()
             return cell
             
         default:
             let cell = SwitchCell()
-            cell.name = "Resets Daily"
+            cell.title = "Resets Daily"
             cell.settingSwitch.tag = indexPath.row
             cell.isSwitchOn = true
             cell.layoutSubviews()

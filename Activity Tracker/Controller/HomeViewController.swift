@@ -34,75 +34,42 @@ class HomeViewController: UIViewController {
     override func loadView() {
         super.loadView()
         
-        // Setup navigation bar
-        navigationItem.leftBarButtonItem = editButtonItem
-        navigationItem.leftBarButtonItem?.tintColor = UIColor.black
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem?.tintColor = UIColor.black
-        
-        // Setup UIPickerViews
-        tagPicker.delegate = self
-        tagPicker.dataSource = self
-        tagPicker.translatesAutoresizingMaskIntoConstraints = false
-        
-        reportTypePicker.delegate = self
-        reportTypePicker.dataSource = self
-        reportTypePicker.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Setup TableView
-        activityTableView.delegate = self
-        activityTableView.dataSource = self
-        activityTableView.register(ActivityCell.self, forCellReuseIdentifier: "ActivityCell")
-        activityTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        activityTableView.separatorStyle = .singleLine
-        activityTableView.rowHeight = 75
+        configureNavBar()
+        configurePickerView()
+        configureTableView()
     }
     
+    // View Will Appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Load data
-        loadActivities()
-        //loadReportLabels
-        loadTags()
-        loadReportTypeArray()
-        //createSampleActivities()
+        loadData()
         activityTableView.reloadData()
     }
     
+    // View Did Appear
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // continue pickerview setup
-        tagPicker.selectRow(tagPickerData.count - 1, inComponent: 0, animated: true)
         
-        // continue tableview setup
+        // when first opening the app, reset the picker view selections
+        tagPicker.selectRow(tagPickerData.count - 1, inComponent: 0, animated: false)
+        
+        // when returning from a previous
         if let indexPath = activityTableView.indexPathForSelectedRow {
             activityTableView.deselectRow(at: indexPath, animated: true)
         }
     }
-
-    @IBAction func addButtonPressed(_ sender: Any) {
-        print("Creating new activity tracker")
-    }
     
     // MARK: - MODEL METHODS
-    
-    // MARK: TAG METHODS
-    
-    func loadTags() {
+
+    func loadData() {
+        tags = realm.objects(Tag.self)
         tagPickerData = ["Morning","Exercise","Nutrition","All Activities"]
-    }
-    
-    // MARK: REPORT TYPE METHODS
-    
-    func loadReportTypeArray() {
         reportTypePickerData = ["Default","Count","Change","Streak","Days Passed"]
+        
+        activeActivities = realm.objects(Activity.self).filter("isArchived == false")
+        archivedActivities = realm.objects(Activity.self).filter("isArchived == true")
     }
-    
-    // MARK: ENTRY METHODS
-    
-    // insert func to load all Entries / get data for report labels
 
     // Create New Entry
     @objc func createEntry(sender: UIButton) {
@@ -123,16 +90,7 @@ class HomeViewController: UIViewController {
             }
         }
     }
-    
-    // insert func to delete an Entry
-    
-    // MARK: ACTIVITY METHODS
-    
-    func loadActivities() {
-        activeActivities = realm.objects(Activity.self).filter("isArchived == false")
-        archivedActivities = realm.objects(Activity.self).filter("isArchived == true")
-    }
-    
+
     // Create Sample Activities
     func createSampleActivities() {
         let tag1 = Tag()
@@ -197,19 +155,19 @@ class HomeViewController: UIViewController {
         save(activity: activity)
     }
     
-    // insert func to sort activityArray
-    
     // insert func to get report labels for a given activity
     
-    // insert func to get tags for a give activity
+    // MARK: - NAVIGATION
     
-    // MARK: - Navigation Methods
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // change back button to say cancel when navigating to EditActivityTableviewController
-        if segue.identifier == "addActivity" {
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
-        }
+    // Configure Nav Bar
+    func configureNavBar() {
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.black
+        
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = UIColor.black
     }
     
     // Go to Activity Screen
@@ -218,11 +176,36 @@ class HomeViewController: UIViewController {
         vc.selectedActivity = activity
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    // Prepare for segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // change back button to say cancel when navigating to EditActivityTableviewController
+        if segue.identifier == "addActivity" {
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        }
+    }
+    
+    // Add Button Pressed
+    @IBAction func addButtonPressed(_ sender: Any) {
+        print("Creating new activity tracker")
+        
+        //actual segue is in storyboard
+    }
 }
 
 // MARK: - TABLEVIEW
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    // Configure Table View
+    func configureTableView() {
+        activityTableView.delegate = self
+        activityTableView.dataSource = self
+        activityTableView.register(ActivityCell.self, forCellReuseIdentifier: "ActivityCell")
+        activityTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        activityTableView.separatorStyle = .singleLine
+        activityTableView.rowHeight = 75
+    }
     
     // Cell Selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -310,7 +293,19 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
-    // Method to get user selection
+    // Configure Picker View
+    func configurePickerView() {
+        tagPicker.delegate = self
+        tagPicker.dataSource = self
+        tagPicker.translatesAutoresizingMaskIntoConstraints = false
+        
+        reportTypePicker.delegate = self
+        reportTypePicker.dataSource = self
+        reportTypePicker.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    // MARK: PICKERVIEW DELEGATE
+    
     func pickerView(_ picker: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if picker.tag == tagPicker.tag {
             print(tagPickerData[row])
@@ -319,7 +314,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         }
     }
     
-    // MARK: Format Picker Views
+    // MARK: PICKERVIEW DATA SOURCE
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         var pickerLabel = UILabel()
@@ -327,17 +322,26 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         if let currentLabel = view as? UILabel {
             pickerLabel = currentLabel
         } else {
-            // Color code the non-default picker view options
-            let hue = CGFloat(row)/CGFloat(tagPickerData.count)
-            var fontColor = UIColor.black
-            if (pickerView.tag == tagPicker.tag && row != tagPickerData.count - 1) {
-                fontColor = UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-            }
+            // Format font
+//            let hue = CGFloat(row)/CGFloat(tagPickerData.count)
+            let fontColor = UIColor.black
+//            if (pickerView.tag == tagPicker.tag && row != tagPickerData.count - 1) {
+//                fontColor = UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+//            }
             let fontAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline), NSAttributedString.Key.foregroundColor: fontColor]
             pickerLabel.textAlignment = .left
+            
             if pickerView.tag == tagPicker.tag {
-                pickerLabel.attributedText = NSAttributedString(string: "  " + tagPickerData[row], attributes: fontAttributes)
+                // tag picker
+                if row > (tags?.count ?? 0) - 1 {
+                    pickerLabel.attributedText = NSAttributedString(string: "  All Activities", attributes: fontAttributes)
+                } else {
+                    pickerLabel.attributedText = NSAttributedString(string: "  " + (tags?[row].name ?? "tag name not found"), attributes: fontAttributes)
+                }
+                
             } else {
+                
+                // report type picker
                 pickerLabel.attributedText = NSAttributedString(string: "  " + reportTypePickerData[row], attributes: fontAttributes)
             }
         
@@ -349,10 +353,12 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         return pickerLabel
     }
     
+    // Number of components
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    // Numer of rows
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == tagPicker.tag {
             return tagPickerData.count
@@ -365,18 +371,5 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 27
     }
-    
-    // Set Column Width by PickerView and Component
-//    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-//        if pickerView.tag == reportTypePicker.tag {
-//            if component == 0 {
-//                return self.view.frame.width / 3
-//            } else {
-//                return self.view.frame.width / 3 * 2
-//            }
-//        } else {
-//            return self.view.frame.width
-//        }
-//    }
 }
 

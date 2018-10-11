@@ -10,28 +10,20 @@ import UIKit
 
 class SwitchCell: UITableViewCell {
 
-    //MARK: PROPERTIES
+    // MARK: PROPERTIES
     
-    var name: String? {
-        get {
-            return nameLabel.text
-        }
-        set {
-            nameLabel.text = newValue ?? "No name assigned"
-        }
+    var title: String? {
+        get { return titleLabel.text }
+        set { titleLabel.text = newValue }
     }
     
     var isSwitchOn: Bool {
-        get {
-            return settingSwitch.isOn
-        }
-        set {
-            settingSwitch.isOn = newValue
-        }
+        get { return settingSwitch.isOn }
+        set { settingSwitch.isOn = newValue }
     }
     
     // Name Label
-    let nameLabel: UILabel = {
+    let titleLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.title2)
@@ -43,7 +35,6 @@ class SwitchCell: UITableViewCell {
     let settingSwitch: UISwitch = {
         let settingSwitch = UISwitch()
         settingSwitch.translatesAutoresizingMaskIntoConstraints = false
-        settingSwitch.addTarget(self, action: #selector(settingSwitched(sender:)), for: .touchUpInside)
         
         return settingSwitch
     }()
@@ -54,7 +45,6 @@ class SwitchCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         // Cell
-        // self.accessoryType = .detailButton
         self.selectionStyle = .none
         
         // Switch
@@ -64,16 +54,11 @@ class SwitchCell: UITableViewCell {
         settingSwitch.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
         
         // Name
-        self.addSubview(nameLabel)
-        nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
-        nameLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
-        nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8).isActive = true
-    }
-    
-    // Cell Switched
-    @IBAction func settingSwitched(sender: UIButton) {
-        print("creating entry in Activity Cell!")
+        self.addSubview(titleLabel)
+        titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8).isActive = true
+        titleLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -90,5 +75,4 @@ class SwitchCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }
