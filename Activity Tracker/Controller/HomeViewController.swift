@@ -18,8 +18,7 @@ class HomeViewController: UIViewController {
     var tags: Results<Tag>?
     var activeActivities: Results<Activity>?
     var archivedActivities: Results<Activity>?
-    
-    var tagPickerData = [String]()
+
     var reportTypePickerData = [String]()
 
     // Views
@@ -52,8 +51,10 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // when first opening the app, reset the picker view selections
-        tagPicker.selectRow(tagPickerData.count - 1, inComponent: 0, animated: false)
-        
+        if let count = tags?.count {
+            tagPicker.selectRow(count - 1, inComponent: 0, animated: false)
+        }
+    
         // when returning from a previous
         if let indexPath = activityTableView.indexPathForSelectedRow {
             activityTableView.deselectRow(at: indexPath, animated: true)
@@ -64,11 +65,11 @@ class HomeViewController: UIViewController {
 
     func loadData() {
         tags = realm.objects(Tag.self)
-        tagPickerData = ["Morning","Exercise","Nutrition","All Activities"]
         reportTypePickerData = ["Default","Count","Change","Streak","Days Passed"]
         
         activeActivities = realm.objects(Activity.self).filter("isArchived == false")
         archivedActivities = realm.objects(Activity.self).filter("isArchived == true")
+            // insert func to get report labels for a given activity
     }
 
     // Create New Entry
@@ -154,8 +155,6 @@ class HomeViewController: UIViewController {
         activity.isArchived = false
         save(activity: activity)
     }
-    
-    // insert func to get report labels for a given activity
     
     // MARK: - NAVIGATION
     
@@ -262,12 +261,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    // Number of Sections
+    // Section Count
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    // Number of rows in a given section
+    // Row Count
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return activeActivities?.count ?? 0
@@ -276,6 +275,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // Header Height
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 1 {
             if isShowingArchived {
@@ -308,7 +308,9 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ picker: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if picker.tag == tagPicker.tag {
-            print(tagPickerData[row])
+            if let tag = tags?[row] {
+                print(tag)
+            }
         } else {
             print(reportTypePickerData[row])
         }
@@ -361,7 +363,11 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     // Numer of rows
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == tagPicker.tag {
-            return tagPickerData.count
+            if let count = tags?.count {
+                return count
+            } else {
+                return 1
+            }
         } else {
             return reportTypePickerData.count
         }

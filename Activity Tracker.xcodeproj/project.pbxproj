@@ -13,6 +13,8 @@
 		5F07C339216E69C6004A79BC /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C338216E69C6004A79BC /* Date.swift */; };
 		5F07C33B216E7D82004A79BC /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C33A216E7D82004A79BC /* ReportCell.swift */; };
 		5F07C33D216EAC9B004A79BC /* DisclosureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C33C216EAC9B004A79BC /* DisclosureCell.swift */; };
+		5F07C33F217156D9004A79BC /* EntryTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C33E217156D9004A79BC /* EntryTypeTableViewController.swift */; };
+		5F07C3412172983A004A79BC /* ReportTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F07C3402172983A004A79BC /* ReportTypeTableViewController.swift */; };
 		5F9CC9E0216198EC00062258 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9DF216198EC00062258 /* AppDelegate.swift */; };
 		5F9CC9E2216198EC00062258 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CC9E1216198EC00062258 /* HomeViewController.swift */; };
 		5F9CC9E5216198EC00062258 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F9CC9E3216198EC00062258 /* Main.storyboard */; };
@@ -38,6 +40,8 @@
 		5F07C338216E69C6004A79BC /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		5F07C33A216E7D82004A79BC /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
 		5F07C33C216EAC9B004A79BC /* DisclosureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureCell.swift; sourceTree = "<group>"; };
+		5F07C33E217156D9004A79BC /* EntryTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryTypeTableViewController.swift; sourceTree = "<group>"; };
+		5F07C3402172983A004A79BC /* ReportTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTypeTableViewController.swift; sourceTree = "<group>"; };
 		5F9CC9DC216198EC00062258 /* Activity Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Activity Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F9CC9DF216198EC00062258 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F9CC9E1216198EC00062258 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 				5F07C334216D05DF004A79BC /* ActivityTableViewController.swift */,
 				5F9CC9E1216198EC00062258 /* HomeViewController.swift */,
 				5FA08087216A85F800611958 /* EditActivityTableViewController.swift */,
+				5F07C33E217156D9004A79BC /* EntryTypeTableViewController.swift */,
+				5F07C3402172983A004A79BC /* ReportTypeTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -281,8 +287,10 @@
 				5F07C339216E69C6004A79BC /* Date.swift in Sources */,
 				5F9CCA052163D4BC00062258 /* Tag.swift in Sources */,
 				5F9CC9E2216198EC00062258 /* HomeViewController.swift in Sources */,
+				5F07C3412172983A004A79BC /* ReportTypeTableViewController.swift in Sources */,
 				5FA0808C216AB81400611958 /* TextEntryCell.swift in Sources */,
 				5F9CC9FF2163D2C200062258 /* EntryType.swift in Sources */,
+				5F07C33F217156D9004A79BC /* EntryTypeTableViewController.swift in Sources */,
 				5FA0808A216AA1F700611958 /* SwitchCell.swift in Sources */,
 				5F9CCA032163D46400062258 /* RecurrenceType.swift in Sources */,
 				5F9CC9FD2163D20C00062258 /* User.swift in Sources */,

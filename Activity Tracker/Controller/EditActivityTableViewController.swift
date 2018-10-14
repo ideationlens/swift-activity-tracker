@@ -9,19 +9,30 @@
 import RealmSwift
 import UIKit
 
-class EditActivityTableViewController: UITableViewController {
+class EditActivityTableViewController: UITableViewController, ReceiveEntryType, ReceiveReportType {
     
     // PROPERTIES
     let realm = try! Realm()
     
     // Activity
-    var activity: Activity?
+    var activity: Activity!
     
     // Name
     var activityName = ""
     
+    // Entry Type
+    var entryType = EntryType.checkbox {
+        didSet {
+            print("entryType set to \(reportType)")
+        }
+    }
+    
     // Report Type
-    var reportType = ReportType.count
+    var reportType = ReportType.count {
+        didSet {
+            print("reportType set to \(reportType)")
+        }
+    }
     
     // Recurrence Setting
     var recurrenceSetting = RecurrenceType.immediately
@@ -31,6 +42,20 @@ class EditActivityTableViewController: UITableViewController {
     
     // Is Archived
     var isArchived = false
+    
+    // PROTOCOLS
+    
+    // Set Entry Type from EntryTypeTableViewController
+    func setEntryType(to entryType: EntryType) {
+        self.entryType = entryType
+        self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+    }
+    
+    // Set Report Type from ReportTypeTableViewController
+    func setReportType(to reportType: ReportType) {
+        self.reportType = reportType
+        self.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .automatic)
+    }
     
     // MARK: - VIEW CONTROLLER METHODS
     
@@ -57,22 +82,31 @@ class EditActivityTableViewController: UITableViewController {
     func setupLocalProperties() {
         if let currentActivity = activity {
             activityName = currentActivity.name
+            entryType = currentActivity.entryTypeEnum
             recurrenceSetting = currentActivity.recurrenceTypeEnum
             reportType = currentActivity.reportTypeEnum
             isArchived = currentActivity.isArchived
+        } else {
+            activity = Activity()
+            activity.name = "New Activity"
+            activity.entryTypeEnum = entryType
+            activity.recurrenceTypeEnum = recurrenceSetting
+            activity.reportTypeEnum = reportType
+            activity.isArchived = false
         }
     }
     
     // Save Activity
     func saveActivity() {
         // save changes
-        if let currentActivity = self.activity {
+        if activity?.name != "New Activity" {
             do {
                 try self.realm.write {
-                    currentActivity.name = activityName
-                    currentActivity.recurrenceTypeEnum = recurrenceSetting
-                    currentActivity.reportTypeEnum = reportType
-                    currentActivity.isArchived = isArchived
+                    activity.name = activityName
+                    activity.entryTypeEnum = entryType
+                    activity.recurrenceTypeEnum = recurrenceSetting
+                    activity.reportTypeEnum = reportType
+                    activity.isArchived = isArchived
                 }
             } catch {
                 print("Error saving activity, \(error)")
@@ -81,12 +115,12 @@ class EditActivityTableViewController: UITableViewController {
         // or create new
             do {
                 try self.realm.write {
-                    let newActivity = Activity()
-                    newActivity.name = activityName
-                    newActivity.recurrenceTypeEnum = recurrenceSetting
-                    newActivity.reportTypeEnum = reportType
-                    newActivity.isArchived = isArchived
-                    realm.add(newActivity)
+                    activity.name = activityName
+                    activity.entryTypeEnum = entryType
+                    activity.recurrenceTypeEnum = recurrenceSetting
+                    activity.reportTypeEnum = reportType
+                    activity.isArchived = isArchived
+                    realm.add(activity!)
                 }
             } catch {
                 print("Error creating new activity, \(error)")
@@ -100,49 +134,77 @@ class EditActivityTableViewController: UITableViewController {
     @IBAction func settingSwitched(sender: UISwitch) {
         print("changing settings for button \(sender.tag) to \(sender.isOn)")
         switch sender.tag {
-        case 1:
+        case 2:
             recurrenceSetting = recurrenceValues[sender.isOn]!
-            self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
-        case 3:
+            self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .fade)
+        case 4:
             isArchived = !isArchived
-            self.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .fade)
+            self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .fade)
         default:
             print("unrecognized switch")
         }
     }
     
-    // MARK: - TABLEVIEW DATA SOURCE
+    // MARK: - TABLE VIEW
+    
+    // MARK: TABLE VIEW DELEGATE
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 1:
+            goToEntryTypeTableViewController()
+        case 3:
+            goToReportTypeTableViewController()
+        default:
+            print("user selected row \(indexPath.row)")
+        }
+    }
+    
+    // MARK: TABLE VIEW DATA SOURCE
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // return custom cell dependent on indexPath
         switch indexPath.row {
+            
         case 0:
+            // name
             let cell = TextEntryCell()
             cell.title = "Name"
             cell.entryField.text = activityName
             cell.entryField.delegate = self
             cell.tag = 0
+            //cell.heightAnchor.constraint(equalToConstant: 100).isActive = true
             cell.layoutSubviews()
             return cell
             
         case 1:
+            // entry type
+            let cell = DisclosureCell()
+            cell.title = "Entry Type"
+            cell.detail = "\(entryType)"
+            cell.layoutSubviews()
+            return cell
+            
+        case 2:
+            // recurrence
             let cell = SwitchCell()
             cell.title = recurrenceStrings[recurrenceSetting]
-            cell.settingSwitch.tag = 1
+            cell.settingSwitch.tag = 2
             cell.settingSwitch.addTarget(self, action: #selector(settingSwitched(sender:)), for: .touchUpInside)
             cell.isSwitchOn = recurrenceSwitch[recurrenceSetting]!
             cell.layoutSubviews()
             return cell
             
-        case 2:
+        case 3:
+            // report type
             let cell = DisclosureCell()
             cell.title = "Report"
             cell.tag = 2
@@ -150,10 +212,11 @@ class EditActivityTableViewController: UITableViewController {
             cell.layoutSubviews()
             return cell
             
-        case 3:
+        case 4:
+            // is archived
             let cell = SwitchCell()
             cell.title = isArchived ? "Activity is archived" : "Activity is not archived"
-            cell.settingSwitch.tag = 3
+            cell.settingSwitch.tag = 4
             cell.settingSwitch.addTarget(self, action: #selector(settingSwitched(sender:)), for: .touchUpInside)
             cell.isSwitchOn = isArchived
             cell.layoutSubviews()
@@ -171,6 +234,7 @@ class EditActivityTableViewController: UITableViewController {
 
     // MARK: - Navigation
 
+    // Done pressed
     @objc func donePressed() {
         // save activity
        saveActivity()
@@ -178,6 +242,30 @@ class EditActivityTableViewController: UITableViewController {
         // dismiss
        _ = navigationController?.popViewController(animated: true)
     }
+    
+    // Go to Entry Type
+    func goToEntryTypeTableViewController() {
+        let vc = EntryTypeTableViewController()
+        vc.selectedActivity = activity
+        vc.entryType = entryType
+        vc.delegate = self
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = UIColor.black
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // Go to Report Type Table View Controller
+    func goToReportTypeTableViewController() {
+        let vc = ReportTypeTableViewController()
+        vc.selectedActivity = activity
+        vc.entryType = entryType
+        vc.reportType = reportType
+        vc.delegate = self
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = UIColor.black
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
 extension EditActivityTableViewController: UITextFieldDelegate {
