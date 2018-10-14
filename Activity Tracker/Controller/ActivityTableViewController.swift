@@ -14,8 +14,8 @@ class ActivityTableViewController: UITableViewController {
     // MARK: PROPERTIES
     
     let realm = try! Realm()
-    var selectedActivity: Activity?
-    var entries: Results<Entry>?
+    var selectedActivity: Activity!
+    var entries: Results<Entry>!
     
     // MARK: - VIEW CONTROLLER METHODS
     
@@ -25,6 +25,9 @@ class ActivityTableViewController: UITableViewController {
         configureNavBar()
         configureTableView()
         loadEntries()
+        
+        if selectedActivity == nil { fatalError("Could not load selected Activity")}
+        if entries == nil { fatalError("Could not load entries") }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,7 +56,7 @@ class ActivityTableViewController: UITableViewController {
     // MARK: - REALM
     
     func loadEntries() {
-        entries = selectedActivity?.entries.sorted(byKeyPath: "timestamp", ascending: false)
+        entries = selectedActivity.entries.sorted(byKeyPath: "timestamp", ascending: false)
     }
     
     // MARK: - TABLEVIEW
@@ -100,9 +103,17 @@ class ActivityTableViewController: UITableViewController {
         case 1: // reports
             let reportCell = ReportCell()
             reportCell.titleLabel.text = "Count Stats"
-            reportCell.report0 = "30 days: \n15"
-            reportCell.report1 = "7 days: \n4"
-            reportCell.report2 = "1 days: \n1"
+            
+            var result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-2419200)).count
+            reportCell.report0 = "Last 4 weeks: \n" + String(result)
+            
+            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)).count
+            reportCell.report1 = "Last 7 days: \n" + String(result)
+            
+            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)).count
+            reportCell.report2 = "Last 24 hours: \n" + String(result)
+
+            
             reportCell.layoutSubviews()
             return reportCell
             

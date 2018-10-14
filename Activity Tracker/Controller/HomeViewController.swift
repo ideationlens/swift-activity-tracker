@@ -250,8 +250,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.report1 = "7 days: 0"
             }
 
-            
-            //
+            // report 2
             if let result = activeActivities?[indexPath.row].entries.count {
                 cell.report2 = "Total: " + String(result)
             } else {
