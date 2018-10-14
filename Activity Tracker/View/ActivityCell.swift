@@ -167,6 +167,9 @@ class ActivityCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        // cell
+        self.selectionStyle = .gray
+        
         // Button View
         self.addSubview(actionButton)
         actionButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true

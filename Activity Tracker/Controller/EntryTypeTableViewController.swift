@@ -47,6 +47,7 @@ class EntryTypeTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         self.tableView.reloadData()
+        self.tableView.selectRow(at: IndexPath(row: 0, section: entryType.rawValue), animated: true, scrollPosition: .none)
     }
 
     // MARK: - TABLE VIEW DELEGATE
@@ -82,47 +83,24 @@ class EntryTypeTableViewController: UITableViewController {
             cell.report0 = "Current Streak: 8"
             cell.report1 = "Best Streak: 12"
             cell.report2 = "Count: 77"
-            if entryType.rawValue == indexPath.section {
-                print("pre-selecting \(indexPath.section)")
-                cell.isSelected = true
-            } else {
-                cell.isSelected = false
-            }
+
         case 1:
             cell.entryType = EntryType.plusOneCounter
             cell.report0 = "Today: 3"
             cell.report1 = "7 days: 12"
             cell.report2 = "1-Day max: 4"
-            if entryType.rawValue == indexPath.section {
-                print("pre-selecting \(indexPath.section)")
-                cell.isSelected = true
-            } else {
-                cell.isSelected = false
-            }
             
         case 2:
            cell.entryType = EntryType.keypad
            cell.report0 = "Today: 100"
            cell.report1 = "Average: 40"
            cell.report2 = "Total: 2,200"
-           if entryType.rawValue == indexPath.section {
-            print("pre-selecting \(indexPath.section)")
-            cell.isSelected = true
-           } else {
-            cell.isSelected = false
-            }
             
         case 3:
            cell.entryType = EntryType.yesNo
            cell.report0 = "'Yes' Count: 25"
            cell.report1 = "% 'Yes': 80%"
            cell.report2 = "Days since 'No': 3"
-           if entryType.rawValue == indexPath.section {
-            print("pre-selecting \(indexPath.section)")
-            cell.isSelected = true
-           } else {
-            cell.isSelected = false
-            }
             
         default:
            cell.entryType = nil

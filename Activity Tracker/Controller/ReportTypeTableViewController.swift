@@ -50,6 +50,7 @@ class ReportTypeTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         self.tableView.reloadData()
+        self.tableView.selectRow(at: IndexPath(row: 0, section: reportType.rawValue), animated: true, scrollPosition: .none)
     }
     
     // MARK: - TABLE VIEW DELEGATE
@@ -85,48 +86,24 @@ class ReportTypeTableViewController: UITableViewController {
             cell.report0 = "Today: 3"
             cell.report1 = "7 days: 12"
             cell.report2 = "30 days: 77"
-            if reportType.rawValue == indexPath.section {
-                print("pre-selecting \(indexPath.section)")
-                cell.isSelected = true
-            } else {
-                cell.isSelected = false
-            }
             
         case ReportType.change.rawValue:
             cell.entryType = entryType
             cell.report0 = "Current: 12"
             cell.report1 = "Delta: +2"
             cell.report2 = "Previous: 10"
-            if reportType.rawValue == indexPath.section {
-                print("pre-selecting \(indexPath.section)")
-                cell.isSelected = true
-            } else {
-                cell.isSelected = false
-            }
             
         case ReportType.streak.rawValue:
             cell.entryType = entryType
             cell.report0 = "Current Streak: 8"
             cell.report1 = "Best Streak: 12"
             cell.report0 = "Average: 7"
-            if reportType.rawValue == indexPath.section {
-                print("pre-selecting \(indexPath.section)")
-                cell.isSelected = true
-            } else {
-                cell.isSelected = false
-            }
             
         case ReportType.timePassed.rawValue:
             cell.entryType = entryType
             cell.report0 = "Current: 10 days"
             cell.report1 = "Average: 14 days"
             cell.report2 = " "
-            if reportType.rawValue == indexPath.section {
-                print("pre-selecting \(indexPath.section)")
-                cell.isSelected = true
-            } else {
-                cell.isSelected = false
-            }
             
         default:
             cell.entryType = nil

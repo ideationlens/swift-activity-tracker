@@ -89,6 +89,8 @@ class HomeViewController: UIViewController {
                     print("Error saving new entry, \(error)")
                 }
             }
+            
+            self.activityTableView.reloadRows(at: [IndexPath(row: sender.tag, section: 0)], with: .fade)
         }
     }
 
@@ -233,9 +235,29 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.tags = activeActivities?[indexPath.row].tags
             cell.entryType = activeActivities?[indexPath.row].entryTypeEnum
             cell.actionButton.tag = indexPath.row
-            cell.report0 = "Today: 0"
-            cell.report1 = "7 days: 4"
-            cell.report2 = "30 days: 19"
+            
+            // report 0
+            if let result = activeActivities?[indexPath.row].entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)) {
+                cell.report0 = "Today: " + String(result.count)
+            } else {
+                cell.report0 = "Today: 0"
+            }
+            
+            // report 1
+            if let result = activeActivities?[indexPath.row].entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)) {
+                cell.report1 = "7 days: " + String(result.count)
+            } else {
+                cell.report1 = "7 days: 0"
+            }
+
+            
+            //
+            if let result = activeActivities?[indexPath.row].entries.count {
+                cell.report2 = "Total: " + String(result)
+            } else {
+                cell.report2 = "Total: 0"
+            }
+            
         } else {
             if isShowingArchived {
                 cell.activityName = archivedActivities?[indexPath.row].name ?? "No name"
