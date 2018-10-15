@@ -80,12 +80,21 @@ class ReportTypeTableViewController: UITableViewController {
         
         cell.activityName = selectedActivity?.name ?? "[Activity Name]"
         
+        var result = 0
         switch indexPath.section {
         case ReportType.count.rawValue:
             cell.entryType = entryType
-            cell.report0 = "Today: 3"
-            cell.report1 = "7 days: 12"
-            cell.report2 = "30 days: 77"
+            // report 0
+            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)).count
+            cell.report0 = "Last 24 hours: " + String(result)
+            
+            // report 1
+            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)).count
+            cell.report1 = "Last 7 days: " + String(result)
+            
+            // report 2
+            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-2419200)).count
+            cell.report2 = "Last 4 weeks: " + String(result)
             
         case ReportType.change.rawValue:
             cell.entryType = entryType

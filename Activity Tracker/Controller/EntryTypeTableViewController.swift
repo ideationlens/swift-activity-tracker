@@ -77,25 +77,36 @@ class EntryTypeTableViewController: UITableViewController {
 
         cell.activityName = selectedActivity?.name ?? "[Activity Name]"
         
+        var result = 0
         switch indexPath.section {
         case 0:
             cell.entryType = EntryType.checkbox
             cell.report0 = "Current Streak: 8"
             cell.report1 = "Best Streak: 12"
-            cell.report2 = "Count: 77"
+            cell.report2 = " "
 
         case 1:
             cell.entryType = EntryType.plusOneCounter
-            cell.report0 = "Today: 3"
-            cell.report1 = "7 days: 12"
-            cell.report2 = "1-Day max: 4"
+            // report 0
+            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)).count
+            cell.report0 = "Last 24 hours: " + String(result)
+            
+            // report 1
+            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)).count
+            cell.report1 = "Last 7 days: " + String(result)
+            
+            // report 2
+            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-2419200)).count
+            cell.report2 = "Last 4 weeks: " + String(result)
             
         case 2:
            cell.entryType = EntryType.keypad
            cell.report0 = "Today: 100"
            cell.report1 = "Average: 40"
-           cell.report2 = "Total: 2,200"
-            
+//           let result2 = selectedActivity.entries.sum()
+//           print("test 1")
+//           cell.report2 = "Total: " + String(result2.value)
+//            print("test 2")
         case 3:
            cell.entryType = EntryType.yesNo
            cell.report0 = "'Yes' Count: 25"

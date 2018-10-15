@@ -9,8 +9,17 @@
 import Foundation
 import RealmSwift
 
-class Entry: Object {
+class Entry: Object, AddableType {
+    
+    // PROPERTIES
+    
     @objc dynamic var value: Int = 1
     @objc dynamic var timestamp: Date = Date()
-    var parentActivity = LinkingObjects(fromType: Activity.self, property: "entries")  
+    var parentActivity = LinkingObjects(fromType: Activity.self, property: "entries")
+    
+    // MARK: - METHODS
+    public func sum<T: AddableType>() -> T {
+        return value as! T
+    }
 }
+

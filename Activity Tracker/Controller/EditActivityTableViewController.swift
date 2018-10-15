@@ -21,18 +21,10 @@ class EditActivityTableViewController: UITableViewController, ReceiveEntryType, 
     var activityName = ""
     
     // Entry Type
-    var entryType = EntryType.checkbox {
-        didSet {
-            print("entryType set to \(reportType)")
-        }
-    }
+    var entryType = EntryType.checkbox
     
     // Report Type
-    var reportType = ReportType.count {
-        didSet {
-            print("reportType set to \(reportType)")
-        }
-    }
+    var reportType = ReportType.count
     
     // Recurrence Setting
     var recurrenceSetting = RecurrenceType.immediately
