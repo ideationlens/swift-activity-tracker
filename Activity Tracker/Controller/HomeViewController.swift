@@ -15,9 +15,9 @@ class HomeViewController: UIViewController {
     
     // Database
     let realm = try! Realm()
-    var tags: Results<Tag>?
-    var activeActivities: Results<Activity>?
-    var archivedActivities: Results<Activity>?
+    var tags: Results<Tag>!
+    var activeActivities: Results<Activity>!
+    var archivedActivities: Results<Activity>!
 
     var reportTypePickerData = [String]()
 
@@ -52,7 +52,7 @@ class HomeViewController: UIViewController {
         
         // when first opening the app, reset the picker view selections
         if let count = tags?.count {
-            tagPicker.selectRow(count - 1, inComponent: 0, animated: false)
+            tagPicker.selectRow(count, inComponent: 0, animated: false)
         }
     
         // when returning from a previous
@@ -64,12 +64,29 @@ class HomeViewController: UIViewController {
     // MARK: - MODEL METHODS
 
     func loadData() {
+        // tags
         tags = realm.objects(Tag.self)
+        
+        // report type
         reportTypePickerData = ["Default","Count","Change","Streak","Days Passed"]
         
+        // activities
         activeActivities = realm.objects(Activity.self).filter("isArchived == false")
         archivedActivities = realm.objects(Activity.self).filter("isArchived == true")
             // insert func to get report labels for a given activity
+    }
+    
+    func updateTagFilter(selection: Tag?) {
+        if let tag = selection {
+            activeActivities = realm.objects(Activity.self).filter("isArchived == false && ANY tags.name = %@",tag.name)
+            archivedActivities = realm.objects(Activity.self).filter("isArchived == true && ANY tags.name = %@",tag.name)
+            isShowingArchived = true
+        } else {
+            activeActivities = realm.objects(Activity.self).filter("isArchived == false")
+            archivedActivities = realm.objects(Activity.self).filter("isArchived == true")
+            isShowingArchived = false
+        }
+        activityTableView.reloadData()
     }
 
     // Create New Entry
@@ -329,8 +346,12 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ picker: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if picker.tag == tagPicker.tag {
-            if let tag = tags?[row] {
-                print(tag)
+            if row > (tags?.count ?? 1) - 1 {
+                updateTagFilter(selection: nil)
+            } else if let tag = tags?[row] {
+                updateTagFilter(selection: tag)
+            } else {
+                updateTagFilter(selection: nil)
             }
         } else {
             print(reportTypePickerData[row])
@@ -385,7 +406,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == tagPicker.tag {
             if let count = tags?.count {
-                return count
+                return count + 1
             } else {
                 return 1
             }

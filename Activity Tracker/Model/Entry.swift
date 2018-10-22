@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class Entry: Object, AddableType {
+class Entry: Object {
     
     // PROPERTIES
     

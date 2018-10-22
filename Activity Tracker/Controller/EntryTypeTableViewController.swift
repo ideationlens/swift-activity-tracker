@@ -101,12 +101,18 @@ class EntryTypeTableViewController: UITableViewController {
             
         case 2:
            cell.entryType = EntryType.keypad
-           cell.report0 = "Today: 100"
-           cell.report1 = "Average: 40"
-//           let result2 = selectedActivity.entries.sum()
-//           print("test 1")
-//           cell.report2 = "Total: " + String(result2.value)
-//            print("test 2")
+           var sum = 0
+           for entry in selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)) { sum += entry.value }
+           cell.report0 = "Today: " + String(sum)
+           
+           sum = 0
+           for entry in selectedActivity.entries { sum += entry.value }
+           cell.report2 = "Total: " + String(sum)
+           let entries = selectedActivity.entries
+           let days = Float(Date().days(from: entries.first!.timestamp) + 1)
+           print("days = \(days)")
+           cell.report1 = "Average: " + String(Float(sum)/days)
+            
         case 3:
            cell.entryType = EntryType.yesNo
            cell.report0 = "'Yes' Count: 25"

@@ -14,46 +14,27 @@ class ActivityCell: UITableViewCell {
     //MARK: PROPERTIES
     
     var activityName: String? {
-        get {
-            return nameLabel.text
-        }
-        set {
-            nameLabel.text = newValue ?? "No name assigned"
-        }
+        get { return nameLabel.text }
+        set { nameLabel.text = newValue ?? "No name assigned" }
     }
     
     var report0: String? {
-        get {
-            return report0Label.text
-        }
-        set {
-            report0Label.text = newValue ?? ""
-        }
+        get { return report0Label.text }
+        set { report0Label.text = newValue ?? "" }
     }
     
     var report1: String? {
-        get {
-            return report1Label.text
-        }
-        set {
-            report1Label.text = newValue ?? ""
-        }
+        get { return report1Label.text }
+        set { report1Label.text = newValue ?? "" }
     }
     
     var report2: String? {
-        get {
-            return report2Label.text
-        }
-        set {
-            report2Label.text = newValue ?? ""
-        }
+        get { return report2Label.text }
+        set { report2Label.text = newValue ?? "" }
     }
     
     var entryType: EntryType?
-    
     var tags: List<Tag>?
-    
-    
     var isDone = false
     
     // Declare view properties
