@@ -32,6 +32,7 @@ class HomeViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
+
         
         configureNavBar()
         configurePickerView()

@@ -83,13 +83,25 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Home" largeTitleDisplayMode="never" id="r0W-9C-UUk">
-                        <barButtonItem key="rightBarButtonItem" springLoaded="YES" systemItem="add" id="U5M-iQ-pXc">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="FCk-N0-0Gj"/>
-                                <segue destination="6Wu-3A-d6j" kind="show" identifier="addActivity" id="ETX-OL-DKH"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem springLoaded="YES" systemItem="add" id="U5M-iQ-pXc">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="FCk-N0-0Gj"/>
+                                    <segue destination="6Wu-3A-d6j" kind="show" identifier="addActivity" id="ETX-OL-DKH"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" style="plain" id="YBH-25-qLb">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OP1-RU-m0T">
+                                    <rect key="frame" x="265.5" y="7" width="92" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Button"/>
+                                </button>
+                                <connections>
+                                    <segue destination="VJo-JL-0Hi" kind="show" id="i5j-hS-wUX"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -129,6 +141,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="APj-RC-Ute" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2216" y="523"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="8vG-jR-YRc">
+            <objects>
+                <viewController id="VJo-JL-0Hi" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Uf5-1h-bGt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Pll-9t-m4A"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c12-7L-BJ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1075" y="-615"/>
         </scene>
         <!--Edit Activity Table View Controller-->
         <scene sceneID="Ubc-qa-tAP">
