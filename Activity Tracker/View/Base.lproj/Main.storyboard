@@ -91,12 +91,8 @@
                                     <segue destination="6Wu-3A-d6j" kind="show" identifier="addActivity" id="ETX-OL-DKH"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" style="plain" id="YBH-25-qLb">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OP1-RU-m0T">
-                                    <rect key="frame" x="265.5" y="7" width="92" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Button"/>
-                                </button>
+                            <barButtonItem systemItem="organize" id="YBH-25-qLb">
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <connections>
                                     <segue destination="VJo-JL-0Hi" kind="show" id="i5j-hS-wUX"/>
                                 </connections>
@@ -142,10 +138,10 @@
             </objects>
             <point key="canvasLocation" x="2216" y="523"/>
         </scene>
-        <!--View Controller-->
+        <!--AllEntriesTableViewController-->
         <scene sceneID="8vG-jR-YRc">
             <objects>
-                <viewController id="VJo-JL-0Hi" sceneMemberID="viewController">
+                <viewController id="VJo-JL-0Hi" userLabel="AllEntriesTableViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Uf5-1h-bGt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
