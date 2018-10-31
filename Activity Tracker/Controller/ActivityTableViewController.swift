@@ -11,6 +11,8 @@ import UIKit
 
 class ActivityTableViewController: UITableViewController {
 
+    // Hello Chris
+    
     // MARK: PROPERTIES
     
     let realm = try! Realm()
