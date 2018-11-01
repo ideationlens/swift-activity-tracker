@@ -31,7 +31,7 @@
 		5FA08088216A85F800611958 /* EditActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA08087216A85F800611958 /* EditActivityTableViewController.swift */; };
 		5FA0808A216AA1F700611958 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA08089216AA1F700611958 /* SwitchCell.swift */; };
 		5FA0808C216AB81400611958 /* TextEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA0808B216AB81400611958 /* TextEntryCell.swift */; };
-		C37A3EAF21893385000EB0E1 /* AllEntriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37A3EAE21893385000EB0E1 /* AllEntriesTableViewController.swift */; };
+		C30AB005218ACCC300188E0E /* AllEntriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,7 +63,7 @@
 		5FA0808B216AB81400611958 /* TextEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEntryCell.swift; sourceTree = "<group>"; };
 		75D43DBB64B36A7DF3EEBDD2 /* Pods-Activity Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Activity Tracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Activity Tracker/Pods-Activity Tracker.release.xcconfig"; sourceTree = "<group>"; };
 		87CAA3401371821CB8BE2D8D /* Pods_Activity_Tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Activity_Tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C37A3EAE21893385000EB0E1 /* AllEntriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEntriesTableViewController.swift; sourceTree = "<group>"; };
+		C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEntriesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,7 +164,7 @@
 				5FA08087216A85F800611958 /* EditActivityTableViewController.swift */,
 				5F07C33E217156D9004A79BC /* EntryTypeTableViewController.swift */,
 				5F07C3402172983A004A79BC /* ReportTypeTableViewController.swift */,
-				C37A3EAE21893385000EB0E1 /* AllEntriesTableViewController.swift */,
+				C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -283,7 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C37A3EAF21893385000EB0E1 /* AllEntriesTableViewController.swift in Sources */,
+				C30AB005218ACCC300188E0E /* AllEntriesTableViewController.swift in Sources */,
 				5F9CC9FB2163D11800062258 /* Entry.swift in Sources */,
 				5F07C337216E61B5004A79BC /* EntryCell.swift in Sources */,
 				5F07C33D216EAC9B004A79BC /* DisclosureCell.swift in Sources */,
