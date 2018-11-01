@@ -5,11 +5,30 @@
 //  Created by CHRISTOPHER KIM on 10/31/18.
 //  Copyright © 2018 Douglas Putnam. All rights reserved.
 //
-
+import RealmSwift
 import UIKit
 
 class AllEntriesTableViewController: UITableViewController {
 
+    
+    // PROPERTIES
+    
+    // Database
+    let realm = try! Realm()
+    var tags: Results<Tag>!
+    var activeActivities: Results<Activity>!
+    var archivedActivities: Results<Activity>!
+    
+    var reportTypePickerData = [String]()
+
+
+    // Views
+
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -78,13 +97,58 @@ class AllEntriesTableViewController: UITableViewController {
     */
 
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
+     
     */
 
+    
+    
+    // MARK: - NAVIGATION
+    
+    // Configure Nav Bar
+    
+    func configureNavBar() {
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.black
+        
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Home", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = UIColor.black
+    
+    }
+
+    
+}
+
+// MARK: - TABLEVIEW
+
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    // Configure Table View
+    func configureTableView() {
+        activityTableView.delegate = self
+        activityTableView.dataSource = self
+        activityTableView.register(ActivityCell.self, forCellReuseIdentifier: "ActivityCell")
+        activityTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        activityTableView.separatorStyle = .singleLine
+        activityTableView.rowHeight = 75
+    }
+    
+    // Cell Selected
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 && !isShowingArchived {
+            isShowingArchived = !isShowingArchived
+            activityTableView.reloadData()
+        } else {
+            if indexPath.section == 0 {
+                if let activity = activeActivities?[indexPath.row] {
+                    goToDetails(of: activity)
+                }
+            } else {
+                if let activity = archivedActivities?[indexPath.row] {
+                    goToDetails(of: activity)
+                }
+            }
+        }
+}
 }
