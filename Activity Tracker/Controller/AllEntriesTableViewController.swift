@@ -120,35 +120,4 @@ class AllEntriesTableViewController: UITableViewController {
     
 }
 
-// MARK: - TABLEVIEW
 
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    // Configure Table View
-    func configureTableView() {
-        activityTableView.delegate = self
-        activityTableView.dataSource = self
-        activityTableView.register(ActivityCell.self, forCellReuseIdentifier: "ActivityCell")
-        activityTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        activityTableView.separatorStyle = .singleLine
-        activityTableView.rowHeight = 75
-    }
-    
-    // Cell Selected
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 && !isShowingArchived {
-            isShowingArchived = !isShowingArchived
-            activityTableView.reloadData()
-        } else {
-            if indexPath.section == 0 {
-                if let activity = activeActivities?[indexPath.row] {
-                    goToDetails(of: activity)
-                }
-            } else {
-                if let activity = archivedActivities?[indexPath.row] {
-                    goToDetails(of: activity)
-                }
-            }
-        }
-}
-}
