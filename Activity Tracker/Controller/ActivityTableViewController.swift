@@ -10,8 +10,6 @@ import RealmSwift
 import UIKit
 
 class ActivityTableViewController: UITableViewController {
-
-    // Hello Chris - YOOOO
     
     // MARK: PROPERTIES
     
