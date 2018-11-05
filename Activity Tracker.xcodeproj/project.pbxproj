@@ -32,6 +32,8 @@
 		5FA0808A216AA1F700611958 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA08089216AA1F700611958 /* SwitchCell.swift */; };
 		5FA0808C216AB81400611958 /* TextEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA0808B216AB81400611958 /* TextEntryCell.swift */; };
 		5FC273D4218B9FFF00953739 /* TagTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC273D3218B9FFF00953739 /* TagTableViewController.swift */; };
+		C30AB005218ACCC300188E0E /* AllEntriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,7 @@
 		5FC273D3218B9FFF00953739 /* TagTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewController.swift; sourceTree = "<group>"; };
 		75D43DBB64B36A7DF3EEBDD2 /* Pods-Activity Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Activity Tracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Activity Tracker/Pods-Activity Tracker.release.xcconfig"; sourceTree = "<group>"; };
 		87CAA3401371821CB8BE2D8D /* Pods_Activity_Tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Activity_Tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEntriesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,7 @@
 				5F07C33E217156D9004A79BC /* EntryTypeTableViewController.swift */,
 				5F07C3402172983A004A79BC /* ReportTypeTableViewController.swift */,
 				5FC273D3218B9FFF00953739 /* TagTableViewController.swift */,
+				C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -283,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C30AB005218ACCC300188E0E /* AllEntriesTableViewController.swift in Sources */,
 				5F9CC9FB2163D11800062258 /* Entry.swift in Sources */,
 				5F07C337216E61B5004A79BC /* EntryCell.swift in Sources */,
 				5FC273D4218B9FFF00953739 /* TagTableViewController.swift in Sources */,

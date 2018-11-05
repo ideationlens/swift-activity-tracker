@@ -10,7 +10,7 @@ import RealmSwift
 import UIKit
 
 class ActivityTableViewController: UITableViewController {
-
+    
     // MARK: PROPERTIES
     
     let realm = try! Realm()
