@@ -9,7 +9,7 @@
 import RealmSwift
 import UIKit
 
-class EditActivityTableViewController: UITableViewController, ReceiveEntryType, ReceiveReportType {
+class EditActivityTableViewController: UITableViewController, ReceiveEntryType, ReceiveReportType, ReceiveTags {
     
     // PROPERTIES
     let realm = try! Realm()
@@ -32,10 +32,13 @@ class EditActivityTableViewController: UITableViewController, ReceiveEntryType, 
     let recurrenceSwitch: [RecurrenceType: Bool] = [.daily: true, .immediately: false]
     let recurrenceValues: [Bool: RecurrenceType] = [true: .daily, false: .immediately]
     
+    // Tags
+    var tags = List<Tag>()
+    
     // Is Archived
     var isArchived = false
     
-    // PROTOCOLS
+    // MARK: - PROTOCOL MERTHODS
     
     // Set Entry Type from EntryTypeTableViewController
     func setEntryType(to entryType: EntryType) {
@@ -47,6 +50,12 @@ class EditActivityTableViewController: UITableViewController, ReceiveEntryType, 
     func setReportType(to reportType: ReportType) {
         self.reportType = reportType
         self.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .automatic)
+    }
+    
+    // Set Tags from TagTableViewController
+    func setTags(to tags: List<Tag>) {
+        self.tags = tags
+        self.tableView.reloadRows(at: [IndexPath(row: 5, section: 0)], with: .automatic)
     }
     
     // MARK: - VIEW CONTROLLER METHODS
@@ -147,6 +156,8 @@ class EditActivityTableViewController: UITableViewController, ReceiveEntryType, 
             goToEntryTypeTableViewController()
         case 3:
             goToReportTypeTableViewController()
+        case 5:
+            goToTagTableViewController()
         default:
             print("user selected row \(indexPath.row)")
         }
@@ -159,7 +170,7 @@ class EditActivityTableViewController: UITableViewController, ReceiveEntryType, 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -214,6 +225,14 @@ class EditActivityTableViewController: UITableViewController, ReceiveEntryType, 
             cell.layoutSubviews()
             return cell
             
+        case 5:
+            // entry type
+            let cell = DisclosureCell()
+            cell.title = "Tags"
+            cell.detail = ""
+            cell.layoutSubviews()
+            return cell
+            
         default:
             let cell = SwitchCell()
             cell.title = "Resets Daily"
@@ -254,6 +273,16 @@ class EditActivityTableViewController: UITableViewController, ReceiveEntryType, 
         vc.reportType = reportType
         vc.delegate = self
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = UIColor.black
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // Go to Tag Table View Controller
+    func goToTagTableViewController() {
+        let vc = TagTableViewController()
+        vc.activity = activity
+        vc.delegate = self
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor.black
         navigationController?.pushViewController(vc, animated: true)
     }
