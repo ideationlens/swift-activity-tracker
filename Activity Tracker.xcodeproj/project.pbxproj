@@ -33,7 +33,6 @@
 		5FA0808C216AB81400611958 /* TextEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA0808B216AB81400611958 /* TextEntryCell.swift */; };
 		5FC273D4218B9FFF00953739 /* TagTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC273D3218B9FFF00953739 /* TagTableViewController.swift */; };
 		C30AB005218ACCC300188E0E /* AllEntriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */; };
-
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -163,12 +162,12 @@
 			isa = PBXGroup;
 			children = (
 				5F07C334216D05DF004A79BC /* ActivityTableViewController.swift */,
+				C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */,
 				5F9CC9E1216198EC00062258 /* HomeViewController.swift */,
 				5FA08087216A85F800611958 /* EditActivityTableViewController.swift */,
 				5F07C33E217156D9004A79BC /* EntryTypeTableViewController.swift */,
 				5F07C3402172983A004A79BC /* ReportTypeTableViewController.swift */,
 				5FC273D3218B9FFF00953739 /* TagTableViewController.swift */,
-				C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
