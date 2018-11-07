@@ -19,6 +19,8 @@ class TagTableViewController: UITableViewController {
     let realm = try! Realm()
     var activity: Activity!
     var tags: Results<Tag>!
+    var allTagNames = [String]()
+    var activityTagNames = [String]()
     var delegate: ReceiveTags?
     
     // MARK: - VIEW CONTROLLER METHODS
@@ -36,31 +38,58 @@ class TagTableViewController: UITableViewController {
     // MARK: - Realm Methods
     func setupLocalProperties() {
         tags = realm.objects(Tag.self)
+        for tag in tags {
+            allTagNames.append(tag.name)
+        }
+        for tag in activity.tags {
+            activityTagNames.append(tag.name)
+        }
     }
     
     // MARK: - UI METHODS
-    @objc func addButtonPressed() {
-        print("add new tag")
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+        let alert = UIAlertController(title: "Add New Tag", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Tag", style: .default) { (action) in
+            do {
+                try self.realm.write {
+                    let newTag = Tag()
+                    newTag.name = textField.text!
+                    self.activity.tags.append(newTag)
+                    self.allTagNames.append(newTag.name)
+                }
+            } catch {
+                print("Error saving new tag, \(error)")
+            }
+            
+            self.tableView.reloadData()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new tag"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
     }
-    
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return tags.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = DisclosureCell()
-        cell.title = tags[indexPath.row].name
-        if activity.tags.contains(tags[indexPath.row]) {
+        cell.title = allTagNames[indexPath.row]
+        if activityTagNames.contains(allTagNames[indexPath.row]) {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
