@@ -10,7 +10,7 @@ import UIKit
 
 class AllEntriesTableViewController: UITableViewController {
 
-    
+    // add comment - CK
     // MARK: PROPERTIES
     
     let realm = try! Realm()
