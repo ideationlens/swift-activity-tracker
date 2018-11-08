@@ -91,18 +91,11 @@
                                     <segue destination="6Wu-3A-d6j" kind="show" identifier="addActivity" id="ETX-OL-DKH"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem style="plain" id="oSZ-P8-Xk7">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="B0Z-Rc-OMY">
-                                    <rect key="frame" x="265.5" y="7" width="92" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <accessibility key="accessibilityConfiguration">
-                                        <accessibilityTraits key="traits" button="YES" image="YES"/>
-                                    </accessibility>
-                                    <state key="normal" title="Button"/>
-                                    <connections>
-                                        <segue destination="pAt-gu-zF6" kind="show" id="QrA-Ct-fhT"/>
-                                    </connections>
-                                </button>
+                            <barButtonItem style="plain" systemItem="organize" id="oSZ-P8-Xk7">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <segue destination="pAt-gu-zF6" kind="show" id="bY7-dv-qyU"/>
+                                </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
@@ -144,6 +137,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="APj-RC-Ute" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2216" y="523"/>
+        </scene>
+        <!--Edit Entry Table View Controller-->
+        <scene sceneID="log-rx-x4R">
+            <objects>
+                <tableViewController id="mJQ-fm-2uL" customClass="EditEntryTableViewController" customModule="Activity_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Utx-9G-2XV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="iJJ-0c-byG">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iJJ-0c-byG" id="1aN-Pb-oLK">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="mJQ-fm-2uL" id="CLJ-lc-bDA"/>
+                            <outlet property="delegate" destination="mJQ-fm-2uL" id="51i-2d-Jxu"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LYm-Uy-tYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2216" y="-913"/>
         </scene>
         <!--All Entries Table View Controller-->
         <scene sceneID="gYV-zH-TQc">

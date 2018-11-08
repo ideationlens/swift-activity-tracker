@@ -34,6 +34,7 @@
 		5FC273D4218B9FFF00953739 /* TagTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC273D3218B9FFF00953739 /* TagTableViewController.swift */; };
 		5FE4C5482193B17D005A9DAA /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE4C5472193B17D005A9DAA /* Float.swift */; };
 		C30AB005218ACCC300188E0E /* AllEntriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */; };
+		C3106C29219417C900E28CEC /* EditEntryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3106C28219417C900E28CEC /* EditEntryTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		75D43DBB64B36A7DF3EEBDD2 /* Pods-Activity Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Activity Tracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Activity Tracker/Pods-Activity Tracker.release.xcconfig"; sourceTree = "<group>"; };
 		87CAA3401371821CB8BE2D8D /* Pods_Activity_Tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Activity_Tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C30AB004218ACCC300188E0E /* AllEntriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEntriesTableViewController.swift; sourceTree = "<group>"; };
+		C3106C28219417C900E28CEC /* EditEntryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEntryTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 				5F07C33E217156D9004A79BC /* EntryTypeTableViewController.swift */,
 				5F07C3402172983A004A79BC /* ReportTypeTableViewController.swift */,
 				5FC273D3218B9FFF00953739 /* TagTableViewController.swift */,
+				C3106C28219417C900E28CEC /* EditEntryTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				5F9CC9E2216198EC00062258 /* HomeViewController.swift in Sources */,
 				5F07C3412172983A004A79BC /* ReportTypeTableViewController.swift in Sources */,
 				5FA0808C216AB81400611958 /* TextEntryCell.swift in Sources */,
+				C3106C29219417C900E28CEC /* EditEntryTableViewController.swift in Sources */,
 				5F9CC9FF2163D2C200062258 /* EntryType.swift in Sources */,
 				5F07C33F217156D9004A79BC /* EntryTypeTableViewController.swift in Sources */,
 				5FA0808A216AA1F700611958 /* SwitchCell.swift in Sources */,
