@@ -81,6 +81,9 @@ class ReportTypeTableViewController: UITableViewController {
         cell.activityName = selectedActivity?.name ?? "[Activity Name]"
         
         var result = 0
+        var result1: Float = 0.0
+        var result2: Float = 0.0
+        
         switch indexPath.section {
         case ReportType.count.rawValue:
             cell.entryType = entryType
@@ -98,9 +101,21 @@ class ReportTypeTableViewController: UITableViewController {
             
         case ReportType.change.rawValue:
             cell.entryType = entryType
-            cell.report0 = "Current: 12"
-            cell.report1 = "Delta: +2"
-            cell.report2 = "Previous: 10"
+            // report 0
+            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)).count
+            cell.report0 = "Last 24 hours: \(result)/day"
+            
+            // report 2
+            result1 = Float(selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)).count)/7.0
+            cell.report2 = "Last 7 days: \(result1.format(f: ".1"))/day"
+            
+            if Float(result) > result1 {
+                result2 = Float(result) - result1
+                cell.report1 = "Delta: +\(result2.format(f: ".1"))/day"
+            } else {
+                cell.report1 = "Delta: \(result2.format(f: ".1"))/day"
+            }
+            
             
         case ReportType.streak.rawValue:
             cell.entryType = entryType

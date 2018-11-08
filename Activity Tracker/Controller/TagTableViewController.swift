@@ -19,6 +19,8 @@ class TagTableViewController: UITableViewController {
     let realm = try! Realm()
     var activity: Activity!
     var tags: Results<Tag>!
+    var allTagNames = [String]()
+    var activityTagNames = [String]()
     var delegate: ReceiveTags?
     
     // MARK: - VIEW CONTROLLER METHODS
@@ -30,91 +32,131 @@ class TagTableViewController: UITableViewController {
     
         // Initialize Properties
         setupLocalProperties()
-        
     }
     
     // MARK: - Realm Methods
+    
+    // Load Tags
     func setupLocalProperties() {
         tags = realm.objects(Tag.self)
+        for tag in tags {
+            allTagNames.append(tag.name)
+        }
+        print("getting activity tags")
+        for tag in activity.tags {
+            activityTagNames.append(tag.name)
+            print(tag.name)
+        }
     }
+    
+    // Create New Tag
+    func addActivityTag(name: String) {
+        do {
+            try self.realm.write {
+                let newTag = Tag()
+                newTag.name = name
+                self.activity.tags.append(newTag)
+                self.allTagNames.append(newTag.name)
+            }
+        } catch {
+            print("Error saving new tag, \(error)")
+        }
+        
+        tableView.reloadData()
+    }
+    
+    // Delete Tag from Realm and all Activity Trackers
+    
+    // Add Existing Tag to Activity
+    func updateActivity(withTag tag: Tag) {
+        activityTagNames.append(tag.name)
+        
+        do {
+            try self.realm.write {
+                activity.tags.append(tag)
+            }
+        } catch {
+            print("Error removing tag, \(error)")
+        }
+        
+        tableView.reloadData()
+    }
+    
+    // Remove Tag from Activity
+    func removeActivityTag(index: Int) {
+        activityTagNames.remove(at: index)
+        
+        do {
+            try self.realm.write {
+                activity.tags.remove(at: index)
+            }
+        } catch {
+            print("Error removing tag, \(error)")
+        }
+        
+        tableView.reloadData()
+    }
+    
     
     // MARK: - UI METHODS
-    @objc func addButtonPressed() {
-        print("add new tag")
+    // Add Button
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+        let alert = UIAlertController(title: "Add New Tag", message: "", preferredStyle: .alert)
+        let addAction = UIAlertAction(title: "Add Tag", style: .default) { (action) in
+            self.addActivityTag(name: textField.text!)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Tag name"
+            textField = alertTextField
+        }
+        
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+
+    // MARK: - TABLE VIEW
+    // func configureTableView() {}
+    
+    // MARK: TABLE VIEW DELEGATE METHODS
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if activityTagNames.contains(allTagNames[indexPath.row]) {
+            for n in 0...activityTagNames.count - 1 {
+                if activityTagNames[n] == allTagNames[indexPath.row] {
+                    removeActivityTag(index: n)
+                }
+            }
+        } else {
+            updateActivity(withTag: tags[indexPath.row])
+        }
     }
     
-
-    // MARK: - Table view data source
+    // MARK: TABLE VIEW DATA SOURCE
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return tags.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = DisclosureCell()
-        cell.title = tags[indexPath.row].name
-        if activity.tags.contains(tags[indexPath.row]) {
+        cell.title = allTagNames[indexPath.row]
+        if activityTagNames.contains(allTagNames[indexPath.row]) {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
         }
 
-        // Configure the cell...
-
         return cell
     }
  
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
