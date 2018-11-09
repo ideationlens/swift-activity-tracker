@@ -18,19 +18,19 @@ class ActivityCell: UITableViewCell {
         set { nameLabel.text = newValue ?? "No name assigned" }
     }
     
-    var report0: String? {
-        get { return report0Label.text }
-        set { report0Label.text = newValue ?? "" }
+    var report0: String {
+        get { return report0Label.text ?? ""}
+        set { report0Label.text = newValue}
     }
     
-    var report1: String? {
-        get { return report1Label.text }
-        set { report1Label.text = newValue ?? "" }
+    var report1: String {
+        get { return report1Label.text ?? ""}
+        set { report1Label.text = newValue}
     }
     
-    var report2: String? {
-        get { return report2Label.text }
-        set { report2Label.text = newValue ?? "" }
+    var report2: String {
+        get { return report2Label.text ?? ""}
+        set { report2Label.text = newValue}
     }
     
     var entryType: EntryType?
@@ -207,20 +207,10 @@ class ActivityCell: UITableViewCell {
         
         //nameAndTagView.layoutIfNeeded()
         
-        // report0
-        if let report = report0 {
-            report0Label.text = report
-        }
-    
-        // report1
-        if let report = report1 {
-            report1Label.text = report
-        }
-        
-        // report2
-        if let report = report2 {
-            report2Label.text = report
-        }
+        // report labels
+        report0Label.text = report0
+        report1Label.text = report1
+        report2Label.text = report2
         
         // entryType
         if let entryType = entryType {

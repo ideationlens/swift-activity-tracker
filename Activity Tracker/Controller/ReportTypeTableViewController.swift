@@ -80,54 +80,22 @@ class ReportTypeTableViewController: UITableViewController {
         
         cell.activityName = selectedActivity?.name ?? "[Activity Name]"
         
-        var result = 0
-        var result1: Float = 0.0
-        var result2: Float = 0.0
-        
         switch indexPath.section {
         case ReportType.count.rawValue:
             cell.entryType = entryType
-            // report 0
-            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)).count
-            cell.report0 = "Last 24 hours: " + String(result)
-            
-            // report 1
-            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)).count
-            cell.report1 = "Last 7 days: " + String(result)
-            
-            // report 2
-            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-2419200)).count
-            cell.report2 = "Last 4 weeks: " + String(result)
+            (cell.report0, cell.report1, cell.report2) = selectedActivity.getReportLabels(for: ReportType.count)
             
         case ReportType.change.rawValue:
             cell.entryType = entryType
-            // report 0
-            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)).count
-            cell.report0 = "Last 24 hours: \(result)/day"
-            
-            // report 2
-            result1 = Float(selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)).count)/7.0
-            cell.report2 = "Last 7 days: \(result1.format(f: ".1"))/day"
-            
-            if Float(result) > result1 {
-                result2 = Float(result) - result1
-                cell.report1 = "Delta: +\(result2.format(f: ".1"))/day"
-            } else {
-                cell.report1 = "Delta: \(result2.format(f: ".1"))/day"
-            }
-            
+            (cell.report0, cell.report1, cell.report2) = selectedActivity.getReportLabels(for: ReportType.change)
             
         case ReportType.streak.rawValue:
             cell.entryType = entryType
-            cell.report0 = "Current Streak: 8"
-            cell.report1 = "Best Streak: 12"
-            cell.report0 = "Average: 7"
+            (cell.report0, cell.report1, cell.report2) = selectedActivity.getReportLabels(for: ReportType.streak)
             
         case ReportType.timePassed.rawValue:
             cell.entryType = entryType
-            cell.report0 = "Current: 10 days"
-            cell.report1 = "Average: 14 days"
-            cell.report2 = " "
+            (cell.report0, cell.report1, cell.report2) = selectedActivity.getReportLabels(for: ReportType.timePassed)
             
         default:
             cell.entryType = nil
