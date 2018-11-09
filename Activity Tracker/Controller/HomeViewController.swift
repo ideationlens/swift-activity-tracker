@@ -33,7 +33,6 @@ class HomeViewController: UIViewController {
     override func loadView() {
         super.loadView()
 
-        
         configureNavBar()
         configurePickerView()
         configureTableView()
@@ -249,30 +248,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         
         if indexPath.section == 0 {
-            cell.activityName = activeActivities?[indexPath.row].name ?? "No name"
-            cell.tags = activeActivities?[indexPath.row].tags
-            cell.entryType = activeActivities?[indexPath.row].entryTypeEnum
+            guard let activity = activeActivities?[indexPath.row] else { fatalError("Could not access activity from Active Activities")}
+            
+            cell.activityName = activity.name
+            cell.tags = activity.tags
+            cell.entryType = activity.entryTypeEnum
             cell.actionButton.tag = indexPath.row
-            
-            // report 0
-            if let result = activeActivities?[indexPath.row].entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)) {
-                cell.report0 = "Today: " + String(result.count)
+            if reportTypePicker.selectedRow(inComponent: 0) > 0 {
+                let reportType = ReportType(rawValue: reportTypePicker.selectedRow(inComponent: 0) - 1)
+                (cell.report0, cell.report1, cell.report2) = (activity.getReportLabels(for: reportType))
             } else {
-                cell.report0 = "Today: 0"
-            }
-            
-            // report 1
-            if let result = activeActivities?[indexPath.row].entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)) {
-                cell.report1 = "7 days: " + String(result.count)
-            } else {
-                cell.report1 = "7 days: 0"
-            }
-
-            // report 2
-            if let result = activeActivities?[indexPath.row].entries.count {
-                cell.report2 = "Total: " + String(result)
-            } else {
-                cell.report2 = "Total: 0"
+                (cell.report0, cell.report1, cell.report2) = (activity.getReportLabels())
             }
             
         } else {

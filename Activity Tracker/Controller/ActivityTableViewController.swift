@@ -103,17 +103,8 @@ class ActivityTableViewController: UITableViewController {
         case 1: // reports
             let reportCell = ReportCell()
             reportCell.titleLabel.text = "Count Stats"
-            
-            var result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-2419200)).count
-            reportCell.report0 = "Last 4 weeks: \n" + String(result)
-            
-            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)).count
-            reportCell.report1 = "Last 7 days: \n" + String(result)
-            
-            result = selectedActivity.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)).count
-            reportCell.report2 = "Last 24 hours: \n" + String(result)
+            (reportCell.report0, reportCell.report1, reportCell.report2) = (selectedActivity.getReportLabels(onSingleLine: false))
 
-            
             reportCell.layoutSubviews()
             return reportCell
             

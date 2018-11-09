@@ -14,39 +14,23 @@ class ReportCell: UITableViewCell {
     
     // Computed properties
     var title: String? {
-        get {
-            return titleLabel.text
-        }
-        set {
-            titleLabel.text = newValue
-        }
+        get { return titleLabel.text }
+        set { titleLabel.text = newValue }
     }
 
-    var report0: String? {
-        get {
-            return report0Label.text
-        }
-        set {
-            report0Label.text = newValue
-        }
+    var report0: String {
+        get { return report0Label.text ?? "" }
+        set { report0Label.text = newValue }
     }
     
-    var report1: String? {
-        get {
-            return report1Label.text
-        }
-        set {
-            report1Label.text = newValue
-        }
+    var report1: String {
+        get { return report1Label.text ?? "" }
+        set { report1Label.text = newValue }
     }
     
-    var report2: String? {
-        get {
-            return report2Label.text
-        }
-        set {
-            report2Label.text = newValue
-        }
+    var report2: String {
+        get { return report2Label.text ?? "" }
+        set { report2Label.text = newValue }
     }
     
     // UIViews
@@ -153,27 +137,15 @@ class ReportCell: UITableViewCell {
     
     // Layout Subviews
     override func layoutSubviews() {
+        // report labels
+        report0Label.text = report0
+        report0Label.isHidden = false
         
-        if let report = report0 {
-            report0Label.text = report
-            report0Label.isHidden = false
-            
-            if let report = report1 {
-                report1Label.text = report
-                report1Label.isHidden = false
-                
-                if let report = report2 {
-                    report2Label.text = report
-                    report2Label.isHidden = false
-                } else {
-                    report2Label.isHidden = true
-                }
-            } else {
-                report1Label.isHidden = true
-            }
-        } else {
-            report0Label.isHidden = true
-        }
+        report1Label.text = report1
+        report1Label.isHidden = false
+
+        report2Label.text = report2
+        report2Label.isHidden = false
         
         super.layoutSubviews()
     }
