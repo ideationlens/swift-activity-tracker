@@ -64,21 +64,21 @@ class Activity: Object {
         case ReportType.count:
             // count - report label 0
             result0 = Float(self.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)).count)
-            label0 = "Last 24 hours: \(line)" +  String(result0)
+            label0 = "Last 24 hours: \(line)" +  String(result0.format(f: ".0"))
             
             // count - report label 1
             result1 = Float(self.entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)).count)
-            label1 = "Last 7 days: \(line)" + String(result1)
+            label1 = "Last 7 days: \(line)" + String(result1.format(f: ".0"))
             
             // count - report label 2
             result2 = Float(self.entries.filter("timestamp > %@", Date().addingTimeInterval(-2419200)).count)
-            label2 = "Last 4 weeks: \(line)" + String(result2)
+            label2 = "Last 4 weeks: \(line)" + String(result2.format(f: ".0"))
         
         // change report type
         case ReportType.change:
             // change - report label 0
             result0 = Float(self.entries.filter("timestamp > %@", Date().addingTimeInterval(-86400)).count)
-            label0 = "Last 24 hours: \(line)\(result1.format(f: ".1"))/day"
+            label0 = "Last 24 hours: \(line)\(result0.format(f: ".1"))/day"
             
             // change - report label 2
             result2 = Float(self.entries.filter("timestamp > %@", Date().addingTimeInterval(-604800)).count)/7.0
@@ -94,12 +94,44 @@ class Activity: Object {
             
         // streak report type
         case ReportType.streak:
-            label0 = "Current Streak: \(line)8"
-            label1 = "Best Streak: \(line)12"
-            label2 = "Average: \(line)7"
+            // create streak array, where each element is one consectuive streak count
+            var streaks = [0]
+            var streakIndex = 0
+            let minDate = self.entries.min(ofProperty: "timestamp") as Date?
+
+            // iterate through each day since first entry, while also iterating through each entry
+            if minDate != nil {
+                var streakDate = minDate!
+                for entry in self.entries {
+                    // dates are in the same day, then add one to current streak
+                    if Calendar.current.isDate(streakDate, inSameDayAs: entry.timestamp) {
+                        streaks[streakIndex] += 1
+                        streakDate = Calendar.current.date(byAdding: .day, value: 1, to: streakDate)!
+                        
+                    // else if entry date is greater than the streak date, then start new streak
+                    } else if streakDate <  entry.timestamp {
+                        streaks.append(1)
+                        streakIndex += 1
+                        streakDate = entry.timestamp
+                        streakDate = Calendar.current.date(byAdding: .day, value: 1, to: streakDate)!
+                    }
+                }
+            }
+            print(streaks)
+            
+            var streakSum = 0
+            for streak in streaks {streakSum += streak}
+            let streakAverage: Float = Float(streakSum) / Float(streaks.count)
+            
+            label0 = "Current Streak: \(line)\(streaks.last ?? 0)"
+            label1 = "Best Streak: \(line)\(streaks.max() ?? 0)"
+            label2 = "Average: \(line)\(streakAverage.format(f: ".1"))"
             
         // time passed report type
         case ReportType.timePassed:
+//            result0 = TimeInterval(self.entries.last?.timestamp)/86400
+//            result0 = TimeIntervalSinceNow
+//            print(result0)
             label0 = "Current: \(line)10 days"
             label1 = "Average: \(line)14 days"
             label2 = " "
