@@ -101,10 +101,11 @@ class Activity: Object {
 
             // iterate through each day since first entry, while also iterating through each entry
             if minDate != nil {
+                let calendar = Calendar.current
                 var streakDate = minDate!
                 for entry in self.entries {
                     // dates are in the same day, then add one to current streak
-                    if Calendar.current.isDate(streakDate, inSameDayAs: entry.timestamp) {
+                    if calendar.isDate(streakDate, inSameDayAs: entry.timestamp) {
                         streaks[streakIndex] += 1
                         streakDate = Calendar.current.date(byAdding: .day, value: 1, to: streakDate)!
                         
@@ -113,11 +114,11 @@ class Activity: Object {
                         streaks.append(1)
                         streakIndex += 1
                         streakDate = entry.timestamp
-                        streakDate = Calendar.current.date(byAdding: .day, value: 1, to: streakDate)!
+                        streakDate = calendar.date(byAdding: .day, value: 1, to: streakDate)!
                     }
                 }
             }
-            print(streaks)
+            //print(streaks)
             
             var streakSum = 0
             for streak in streaks {streakSum += streak}
@@ -129,12 +130,54 @@ class Activity: Object {
             
         // time passed report type
         case ReportType.timePassed:
-//            result0 = TimeInterval(self.entries.last?.timestamp)/86400
-//            result0 = TimeIntervalSinceNow
-//            print(result0)
-            label0 = "Current: \(line)10 days"
-            label1 = "Average: \(line)14 days"
-            label2 = " "
+            // create array of days elapsed between entries
+            var times = [0]
+            let calendar = NSCalendar.current
+            
+            if self.entries.count > 0 {
+                let minDate = self.entries.min(ofProperty: "timestamp") as Date?
+                let totalDaysElapsed = calendar.dateComponents([.day], from: minDate!, to: Date()).day!
+                
+                if self.entries.count > 1 {
+                    times = []
+                    
+                    for n in 1...self.entries.count - 1 {
+                        let date1 = calendar.startOfDay(for: self.entries[n-1].timestamp)
+                        let date2 = calendar.startOfDay(for: self.entries[n].timestamp)
+                        
+                        // if the two entries occur on different days, then append the difference in days to array
+                        if !calendar.isDate(date1, inSameDayAs: date2) {
+                            let timeComponents = calendar.dateComponents([.day], from: date1, to: date2)
+                            times.append(timeComponents.day!)
+                        }
+                    }
+                    
+                    let date1 = calendar.startOfDay(for: self.entries.last!.timestamp)
+                    let date2 = calendar.startOfDay(for: Date())
+                    let timeComponents = calendar.dateComponents([.day], from: date1, to: date2)
+                    times.append(timeComponents.day!)
+                    
+                } else {
+                    times = [totalDaysElapsed]
+                }
+            }
+            print(times)
+            
+            let sortedTimes = times.sorted()
+            let count = times.count
+            var median = Float(sortedTimes[count / 2])
+            if count % 2 == 0 {
+                median = (median + Float(sortedTimes[count / 2 - 1])) / 2.0
+            }
+            
+            label0 = "Current: \(line)\(times.last ?? 0) days"
+            label1 = "Median: \(line)\(median.format(f: ".1")) days"
+            if let maxTime = times.max() {
+                label2 = "Max: \(line)\(maxTime) days"
+            } else {
+                label2 = " "
+            }
+            
         }
         
         return (label0, label1, label2)
