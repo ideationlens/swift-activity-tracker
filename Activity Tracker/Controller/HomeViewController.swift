@@ -342,6 +342,7 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             }
         } else {
             print(reportTypePickerData[row])
+            activityTableView.reloadData()
         }
     }
     
