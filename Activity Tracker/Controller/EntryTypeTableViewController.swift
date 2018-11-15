@@ -81,10 +81,8 @@ class EntryTypeTableViewController: UITableViewController {
         switch indexPath.section {
         case 0: cell.entryType = EntryType.checkbox
         case 1: cell.entryType = EntryType.plusOneCounter
-   
 //        case 2: cell.entryType = EntryType.keypad
 //        case 3: cell.entryType = EntryType.yesNo
-            
         default:
            cell.entryType = nil
         }

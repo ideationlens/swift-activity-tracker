@@ -17,6 +17,18 @@ enum ReportType: Int {
 // MARK: - CUSTOM STRING CONVERTIBLE
 
 extension ReportType: CustomStringConvertible {
+    
+    // Title
+    public var title: String {
+        switch self {
+        case .count: return "Count Stats"
+        case .change: return "Change Stats"
+        case .streak: return "Streak Stats"
+        case .timePassed: return "Time Elapsed Stats"
+        }
+    }
+    
+    // Description
     public var description: String {
         switch self {
         case .count: return "Counts"
@@ -27,7 +39,6 @@ extension ReportType: CustomStringConvertible {
     }
     
     // Definition
-
     public var definition: String {
         switch self {
         case .count: return "Counts - displays totals for today, the past 7 days and 30 days."

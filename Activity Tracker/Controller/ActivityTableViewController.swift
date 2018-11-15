@@ -102,7 +102,7 @@ class ActivityTableViewController: UITableViewController {
             
         case 1: // reports
             let reportCell = ReportCell()
-            reportCell.titleLabel.text = "Count Stats"
+            reportCell.titleLabel.text = selectedActivity.reportTypeEnum.title
             (reportCell.report0, reportCell.report1, reportCell.report2) = (selectedActivity.getReportLabels(onSingleLine: false))
 
             reportCell.layoutSubviews()
