@@ -157,20 +157,20 @@ class HomeViewController: UIViewController {
         activity = Activity()
         activity.name = "Read"
         activity.tags.append(tag3)
-        activity.entryTypeEnum = .yesNo
+        activity.entryTypeEnum = .plusOneCounter
         save(activity: activity)
         
         activity = Activity()
         activity.name = "Do 20,000 Pushups"
         activity.tags.append(tag2)
-        activity.entryTypeEnum = .keypad
+        activity.entryTypeEnum = .checkbox
         activity.isArchived = false
         save(activity: activity)
         
         activity = Activity()
         activity.name = "Avoid Cigarettes"
         activity.tags.append(tag1)
-        activity.entryTypeEnum = .yesNo
+        activity.entryTypeEnum = .checkbox
         activity.isArchived = false
         save(activity: activity)
     }

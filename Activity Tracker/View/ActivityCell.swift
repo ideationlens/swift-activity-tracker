@@ -222,12 +222,12 @@ class ActivityCell: UITableViewCell {
                 actionButton.setImage(UIImage(named: "checkbox_complete"), for: .highlighted)
             case .plusOneCounter:
                 actionButton.setAttributedTitle(NSAttributedString(string: "+1 ", attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3), NSAttributedString.Key.foregroundColor: UIColor.black]), for: .normal)
-            case .keypad:
-                actionButton.imageEdgeInsets = UIEdgeInsets(top: 20, left: 8, bottom: 20, right: 7)
-                actionButton.setImage(UIImage(named: "keypad1"), for: .normal)
-            case .yesNo:
-                actionButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 4)
-                actionButton.setImage(UIImage(named: "yesNo1"), for: .normal)
+//            case .keypad:
+//                actionButton.imageEdgeInsets = UIEdgeInsets(top: 20, left: 8, bottom: 20, right: 7)
+//                actionButton.setImage(UIImage(named: "keypad1"), for: .normal)
+//            case .yesNo:
+//                actionButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 4)
+//                actionButton.setImage(UIImage(named: "yesNo1"), for: .normal)
             }
         }
         

@@ -9,7 +9,7 @@
 import Foundation
 
 enum EntryType: Int {
-    case checkbox = 0, plusOneCounter, keypad, yesNo
+    case checkbox = 0, plusOneCounter //, keypad, yesNo
 }
 
 // MARK: - CUSTOM STRING CONVERTIBLE
@@ -19,8 +19,8 @@ extension EntryType: CustomStringConvertible {
         switch self {
         case .checkbox: return "Checkbox"
         case .plusOneCounter: return "Counter"
-        case .keypad: return "Keypad"
-        case .yesNo: return "Yes/No"
+//        case .keypad: return "Keypad"
+//        case .yesNo: return "Yes/No"
         }
     }
     
@@ -28,8 +28,8 @@ extension EntryType: CustomStringConvertible {
         switch self {
         case .checkbox: return "Checkbox - creates an entry when checked."
         case .plusOneCounter: return "Counter - creates an entry with a pre-determined value, like +1."
-        case .keypad: return "Keypad - let's you enter a number."
-        case .yesNo: return "Yes / No - let's you submit a 'yes' or 'no'."
+//        case .keypad: return "Keypad - let's you enter a number."
+//        case .yesNo: return "Yes / No - let's you submit a 'yes' or 'no'."
         }
     }
     
